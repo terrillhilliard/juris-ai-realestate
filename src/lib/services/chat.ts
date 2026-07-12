@@ -36,7 +36,7 @@ export const INITIAL_STATE: ChatState = { stage: 'intent' };
 
 export const OPENER = {
   text: `Hi! I'm ${BRAND.assistant}, Laurie's AI assistant at Keller Williams East Bay. Are you looking to buy, sell, or invest in the East Bay?`,
-  quickReplies: ['🏠 Buy', '💰 Sell', '📈 Invest'],
+  quickReplies: ['Buy', 'Sell', 'Invest'],
 };
 
 const CITIES = BRAND.markets;
@@ -117,8 +117,8 @@ export function cityInfoTurn(state: ChatState, msg: string): ChatTurnResult | un
   if (!city) return undefined;
   return {
     state: { ...state, city: city.name },
-    reply: `📍 ${city.name} — median around ${fmtPrice(city.medianPrice)}, homes typically go in ~${city.daysOnMarket} days. ${city.vibe}. Thinking of buying, selling, or investing there?`,
-    quickReplies: ['🏠 Buy', '💰 Sell', '📈 Invest'],
+    reply: `${city.name} — median around ${fmtPrice(city.medianPrice)}, homes typically go in ~${city.daysOnMarket} days. ${city.vibe}. Thinking of buying, selling, or investing there?`,
+    quickReplies: ['Buy', 'Sell', 'Invest'],
     typingMs: 1000,
   };
 }
@@ -159,7 +159,7 @@ export function nextTurn(state: ChatState, userMessage: string): ChatTurnResult 
           state,
           reply:
             "Happy to help! Just so I point you the right way — are you looking to buy a home, sell one, or invest in the East Bay?",
-          quickReplies: ['🏠 Buy', '💰 Sell', '📈 Invest'],
+          quickReplies: ['Buy', 'Sell', 'Invest'],
           typingMs: 900,
         };
       }
@@ -246,7 +246,7 @@ export function nextTurn(state: ChatState, userMessage: string): ChatTurnResult 
       const slot = SLOTS.find((s) => msg.toLowerCase().includes(s.split(' ')[0].toLowerCase())) ?? SLOTS[1];
       return {
         state: { ...state, stage: 'booked', slot },
-        reply: `📅 Booked! ${slot} with Laurie Wotus. I've sent a confirmation text with the details and let Laurie know — she'll come prepared for your ${
+        reply: `Booked! ${slot} with Laurie Wotus. I've sent a confirmation text with the details and let Laurie know — she'll come prepared for your ${
           state.intent === 'sell' ? 'pricing and staging consult' : state.intent === 'invest' ? 'investment review' : 'tour'
         }. Anything else I can help with?`,
         quickReplies: ['Start over', 'No, thanks!'],
@@ -266,7 +266,7 @@ export function nextTurn(state: ChatState, userMessage: string): ChatTurnResult 
       }
       return {
         state,
-        reply: `You're all set — Laurie will see you ${state.slot ?? 'soon'}. If anything changes, just text this number anytime, day or night. 🏡`,
+        reply: `You're all set — Laurie will see you ${state.slot ?? 'soon'}. If anything changes, just text this number anytime, day or night.`,
         quickReplies: ['Start over'],
         typingMs: 900,
       };

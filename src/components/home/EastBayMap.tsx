@@ -180,7 +180,7 @@ export default function EastBayMap() {
                 transform: 'translate(-50%, calc(-100% - 46px))',
               }}
             >
-              <div className="mb-1.5 text-sm font-semibold text-ink">📍 {active.name}</div>
+              <div className="mb-1.5 text-sm font-semibold text-ink">{active.name}</div>
               <div className="flex justify-between py-0.5">
                 <span className="text-ink/55">Median price</span>
                 <span className="font-mono text-ink">{fmtPrice(active.medianPrice)}</span>

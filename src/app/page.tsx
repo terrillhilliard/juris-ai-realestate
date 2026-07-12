@@ -77,8 +77,8 @@ export default function Home() {
             <div className="flex flex-col items-center gap-2">
               <button
                 onClick={() => openVoiceAgent()}
-                aria-label="Call and speak with the AI voice agent"
-                title="Speak with the AI — live"
+                aria-label="Speak with Ellie, the AI voice agent"
+                title="Speak with Ellie Agent"
                 className="relative grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-royal to-flame text-white shadow-[0_12px_36px_-8px_rgba(155,17,30,0.6)] transition hover:brightness-110 active:scale-95"
               >
                 <span className="call-pulse absolute inset-0 rounded-full border border-royal/60" />
@@ -88,7 +88,7 @@ export default function Home() {
                 />
                 <PhoneIcon className="animate-ring h-6 w-6" />
               </button>
-              <span className="text-xs font-medium text-ink/60">Call the AI</span>
+              <span className="text-xs font-medium text-ink/60">Speak with Ellie Agent</span>
             </div>
 
             {/* Text — SMS icon */}
@@ -97,13 +97,13 @@ export default function Home() {
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('ellie:ask', { detail: '' }))
                 }
-                aria-label="Text the AI assistant instead"
-                title="Text instead"
+                aria-label="Chat with Ellie, the AI assistant"
+                title="Chat with Ellie"
                 className="grid h-16 w-16 place-items-center rounded-full border border-ink/20 bg-white/70 text-ink backdrop-blur-md transition hover:border-royal/50 hover:text-royal active:scale-95"
               >
                 <SmsIcon className="h-6 w-6" />
               </button>
-              <span className="text-xs font-medium text-ink/60">Text instead</span>
+              <span className="text-xs font-medium text-ink/60">Chat with Ellie</span>
             </div>
           </div>
         </motion.div>

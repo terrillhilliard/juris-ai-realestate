@@ -206,10 +206,10 @@ export default function ChatHero() {
                   key={i}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm leading-relaxed backdrop-blur-xl ${
                     m.role === 'ai'
-                      ? 'border border-black/[0.06] bg-black/[0.035] text-ink'
-                      : 'ml-auto bg-gradient-to-br from-royal to-flame text-white'
+                      ? 'border border-black/[0.07] bg-white/55 text-ink shadow-[0_6px_18px_-10px_rgba(0,0,0,0.25),0_1px_0_0_rgba(255,255,255,0.85)_inset]'
+                      : 'ml-auto border border-white/25 bg-gradient-to-br from-royal/90 to-flame/90 text-white shadow-[0_8px_22px_-10px_rgba(155,17,30,0.55),0_1px_0_0_rgba(255,255,255,0.3)_inset]'
                   }`}
                 >
                   {m.text}
@@ -217,7 +217,7 @@ export default function ChatHero() {
               ))}
             </AnimatePresence>
             {typing && (
-              <div className="flex w-16 items-center gap-1 rounded-2xl border border-black/[0.06] bg-black/[0.035] px-4 py-3">
+              <div className="flex w-16 items-center gap-1 rounded-2xl border border-black/[0.07] bg-white/55 px-4 py-3 shadow-[0_6px_18px_-10px_rgba(0,0,0,0.25),0_1px_0_0_rgba(255,255,255,0.85)_inset] backdrop-blur-xl">
                 {[0, 1, 2].map((d) => (
                   <span
                     key={d}
@@ -236,7 +236,7 @@ export default function ChatHero() {
                 <button
                   key={q}
                   onClick={() => void send(q)}
-                  className="rounded-full border border-royal/35 bg-royal/[0.06] px-3.5 py-1.5 text-xs font-medium text-royal transition hover:bg-royal/[0.14]"
+                  className="rounded-full border border-royal/30 bg-white/50 px-3.5 py-1.5 text-xs font-medium text-royal shadow-[0_4px_14px_-8px_rgba(155,17,30,0.35),0_1px_0_0_rgba(255,255,255,0.8)_inset] backdrop-blur-xl transition hover:border-royal/60 hover:bg-royal/[0.08]"
                 >
                   {q}
                 </button>
@@ -251,7 +251,7 @@ export default function ChatHero() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything — or say where you want to go…"
-              className="min-w-0 flex-1 rounded-xl border border-black/12 bg-black/[0.03] px-4 py-3 text-sm text-ink placeholder-ink/35 outline-none transition focus:border-royal/50"
+              className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white/60 px-4 py-3 text-sm text-ink placeholder-ink/35 shadow-[0_1px_0_0_rgba(255,255,255,0.9)_inset] outline-none backdrop-blur-xl transition focus:border-royal/50 focus:bg-white/80"
             />
             <button
               type="submit"

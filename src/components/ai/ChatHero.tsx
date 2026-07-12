@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { BRAND } from '@/lib/brand';
 import { openVoiceAgent } from '@/lib/voiceWidget';
 import {
@@ -158,8 +157,28 @@ export default function ChatHero() {
       onPointerLeave={onPointerLeave}
       className="mx-auto w-full max-w-2xl will-change-transform"
     >
-      <GlassPanel elevation="floating" glow id="assistant">
-        <div className="flex h-[540px] flex-col p-5 sm:h-[560px] sm:p-6">
+      <div
+        id="assistant"
+        className="edge-light relative isolate overflow-hidden rounded-[28px] border border-black/[0.06] bg-white/40 shadow-[0_36px_90px_-32px_rgba(0,0,0,0.35),0_22px_60px_-28px_rgba(155,17,30,0.22),inset_0_1px_0_0_rgba(255,255,255,0.9)] ring-1 ring-inset ring-white/50 backdrop-blur-[28px] backdrop-saturate-[1.8]"
+      >
+        {/* Liquid layer: morphing royal tints drifting under the glass */}
+        <div aria-hidden className="liquid-blob -left-16 -top-20 h-64 w-64 bg-royal/[0.08]" />
+        <div
+          aria-hidden
+          className="liquid-blob -bottom-24 -right-16 h-72 w-72 bg-royal/[0.06]"
+          style={{ animationDelay: '-6s' }}
+        />
+        {/* Top gloss — curved light catch */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-24 rounded-t-[28px] bg-gradient-to-b from-white/75 via-white/25 to-transparent"
+        />
+        {/* Drifting specular streak */}
+        <div
+          aria-hidden
+          className="specular pointer-events-none absolute -inset-x-1/3 inset-y-0 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent"
+        />
+        <div className="relative z-10 flex h-[540px] flex-col p-5 sm:h-[560px] sm:p-6">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-black/[0.08] pb-4">
             <div className="flex items-center gap-3">
@@ -199,7 +218,10 @@ export default function ChatHero() {
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="min-h-0 flex-1 space-y-2.5 overflow-y-auto py-4 pr-1">
+          <div
+            ref={scrollRef}
+            className="my-3 min-h-0 flex-1 space-y-2.5 overflow-y-auto rounded-2xl border border-black/[0.04] bg-white/25 p-3 shadow-[inset_0_2px_10px_rgba(0,0,0,0.05)]"
+          >
             <AnimatePresence initial={false}>
               {messages.map((m, i) => (
                 <motion.div
@@ -275,7 +297,7 @@ export default function ChatHero() {
             ))}
           </div>
         </div>
-      </GlassPanel>
+      </div>
     </motion.div>
   );
 }

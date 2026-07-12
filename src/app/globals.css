@@ -85,6 +85,29 @@ body {
   animation: orb-float 11s ease-in-out infinite;
 }
 
+/* Liquid blobs — slow morphing royal tints inside glass panels */
+@keyframes liquid-morph {
+  0%,
+  100% {
+    border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
+    transform: translate(0, 0) rotate(0);
+  }
+  33% {
+    border-radius: 60% 40% 45% 55% / 45% 60% 40% 55%;
+    transform: translate(14px, -16px) rotate(9deg);
+  }
+  66% {
+    border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%;
+    transform: translate(-12px, 12px) rotate(-7deg);
+  }
+}
+.liquid-blob {
+  position: absolute;
+  pointer-events: none;
+  filter: blur(42px);
+  animation: liquid-morph 14s ease-in-out infinite;
+}
+
 /* Ringing dial icon — periodic shake with a rest beat */
 @keyframes ring-shake {
   0%,

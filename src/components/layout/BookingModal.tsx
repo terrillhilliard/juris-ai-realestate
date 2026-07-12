@@ -53,13 +53,13 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
             <GlassPanel elevation="floating" glow className="p-6 sm:p-8">
               {submitted ? (
                 <div className="py-6 text-center">
-                  <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-white/15 text-2xl">
+                  <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-royal/10 text-2xl">
                     ✓
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-white">
+                  <h3 className="font-display text-xl font-semibold text-ink">
                     Request received!
                   </h3>
-                  <p className="mt-2 text-sm text-white/55">
+                  <p className="mt-2 text-sm text-ink/55">
                     Laurie will reach out shortly. Want an answer right now?{' '}
                     {BRAND.assistant} can help 24/7 — tap the phone or chat icon below.
                   </p>
@@ -69,10 +69,10 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
                 </div>
               ) : (
                 <>
-                  <h3 className="font-display text-xl font-semibold text-white">
+                  <h3 className="font-display text-xl font-semibold text-ink">
                     Work with Laurie
                   </h3>
-                  <p className="mt-1 text-sm text-white/50">
+                  <p className="mt-1 text-sm text-ink/50">
                     Tell us a little about your plans — buying, selling, or investing in the East
                     Bay.
                   </p>
@@ -80,18 +80,18 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
                     <input
                       required
                       placeholder="Full name"
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-white/40"
+                      className="w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-ink placeholder-ink/35 outline-none transition focus:border-royal/50"
                     />
                     <input
                       required
                       type="tel"
                       placeholder="Phone number"
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-white/40"
+                      className="w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-ink placeholder-ink/35 outline-none transition focus:border-royal/50"
                     />
                     <select
                       defaultValue={service ?? ''}
                       required
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-white/40 [&>option]:bg-[#141414]"
+                      className="w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-ink outline-none transition focus:border-royal/50 [&>option]:bg-white"
                     >
                       <option value="" disabled>
                         I&apos;m looking to…
@@ -102,7 +102,7 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
                     </select>
                     <select
                       defaultValue=""
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-white/40 [&>option]:bg-[#141414]"
+                      className="w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-ink outline-none transition focus:border-royal/50 [&>option]:bg-white"
                     >
                       <option value="" disabled>
                         Preferred area (optional)
@@ -117,7 +117,7 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
                       {sending ? 'Sending…' : 'Request a consult'}
                     </CTAButton>
                   </form>
-                  <p className="mt-3 text-center text-[11px] text-white/30">
+                  <p className="mt-3 text-center text-[11px] text-ink/30">
                     Demo form — submissions are simulated
                   </p>
                 </>

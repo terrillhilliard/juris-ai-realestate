@@ -7,25 +7,25 @@ html {
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #fafafa;
+  background-color: #ffffff;
+  color: #181818;
   overflow-x: hidden;
 }
 
-/* Spatial ambient depth — monochrome haze with royal red traces */
+/* Spatial ambient depth — soft royal-red washes on white */
 .bg-ambient {
   position: fixed;
   inset: 0;
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(720px 480px at 50% -5%, rgba(255, 255, 255, 0.06), transparent 60%),
-    radial-gradient(560px 420px at 8% 38%, rgba(155, 17, 30, 0.05), transparent 62%),
-    radial-gradient(640px 480px at 94% 72%, rgba(155, 17, 30, 0.035), transparent 60%),
-    radial-gradient(520px 400px at 45% 105%, rgba(255, 255, 255, 0.03), transparent 60%);
+    radial-gradient(760px 500px at 50% -6%, rgba(155, 17, 30, 0.08), transparent 62%),
+    radial-gradient(580px 440px at 8% 36%, rgba(155, 17, 30, 0.06), transparent 62%),
+    radial-gradient(640px 480px at 94% 74%, rgba(0, 0, 0, 0.035), transparent 60%),
+    radial-gradient(520px 400px at 45% 106%, rgba(155, 17, 30, 0.05), transparent 60%);
 }
 
-/* Liquid-glass edge light: gradient hairline running around the panel */
+/* Liquid-glass edge light: royal → ink hairline running around the panel */
 .edge-light {
   position: relative;
 }
@@ -37,10 +37,10 @@ body {
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(232, 50, 63, 0.26),
-    rgba(255, 255, 255, 0.28) 30%,
-    rgba(255, 255, 255, 0.06) 55%,
-    rgba(155, 17, 30, 0.18)
+    rgba(155, 17, 30, 0.55),
+    rgba(0, 0, 0, 0.12) 32%,
+    rgba(0, 0, 0, 0.04) 58%,
+    rgba(196, 20, 42, 0.4)
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -51,7 +51,7 @@ body {
   z-index: 30;
 }
 
-/* Specular streak that drifts across glass surfaces */
+/* Specular sheen that drifts across glass surfaces */
 @keyframes specular-drift {
   0%,
   100% {
@@ -60,7 +60,7 @@ body {
   }
   50% {
     transform: translateX(30%) rotate(8deg);
-    opacity: 0.9;
+    opacity: 0.85;
   }
 }
 .specular::before {
@@ -127,7 +127,7 @@ body {
 }
 
 ::selection {
-  background: rgba(155, 17, 30, 0.3);
+  background: rgba(155, 17, 30, 0.22);
 }
 
 *::-webkit-scrollbar {
@@ -137,7 +137,7 @@ body {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
 

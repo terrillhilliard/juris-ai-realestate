@@ -16,7 +16,7 @@ export default function AboutLaurie() {
         transition={{ duration: 0.5 }}
       >
         <GlassPanel elevation="floating" glow className="h-full overflow-hidden p-0">
-          <div className="relative flex h-full min-h-[380px] flex-col justify-end bg-gradient-to-b from-white/[0.05] via-transparent to-black/60">
+          <div className="relative flex h-full min-h-[380px] flex-col justify-end bg-gradient-to-b from-royal/[0.06] via-transparent to-black/60">
             <img
               src={BRAND.assets.standing}
               alt={`${BRAND.agent}, ${BRAND.brokerage}`}
@@ -40,8 +40,8 @@ export default function AboutLaurie() {
         className="flex flex-col gap-6"
       >
         <GlassPanel elevation="raised" className="flex-1 p-6 sm:p-8">
-          <span className="text-xs uppercase tracking-widest text-white/50">{BRAND.tagline}</span>
-          <p className="mt-3 text-base leading-relaxed text-white/75">
+          <span className="text-xs uppercase tracking-widest text-royal">{BRAND.tagline}</span>
+          <p className="mt-3 text-base leading-relaxed text-ink/75">
             Laurie has lived and worked in the {BRAND.region} for {BRAND.yearsInEastBay} years —
             she works, shops, hikes, and volunteers in the same communities she sells in. From
             first-time buyers to pricing and staging for sellers to fix &amp; flip investors, her
@@ -51,7 +51,7 @@ export default function AboutLaurie() {
             {BRAND.markets.map((m) => (
               <span
                 key={m}
-                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/60"
+                className="rounded-full border border-black/10 bg-black/[0.03] px-3 py-1 text-xs text-ink/60"
               >
                 📍 {m}
               </span>
@@ -60,17 +60,17 @@ export default function AboutLaurie() {
         </GlassPanel>
 
         <GlassPanel elevation="raised" glow className="p-6 sm:p-8">
-          <div className="flex gap-1 text-paper">{'★★★★★'.split('').map((s, i) => <span key={i}>{s}</span>)}</div>
-          <blockquote className="mt-3 text-base italic leading-relaxed text-white/80">
+          <div className="flex gap-1 text-royal">{'★★★★★'.split('').map((s, i) => <span key={i}>{s}</span>)}</div>
+          <blockquote className="mt-3 text-base italic leading-relaxed text-ink/80">
             &ldquo;{BRAND.testimonial.quote}&rdquo;
           </blockquote>
           <div className="mt-4 flex items-center gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-sm font-bold text-paper">
+            <div className="grid h-9 w-9 place-items-center rounded-full bg-royal/10 text-sm font-bold text-royal">
               {BRAND.testimonial.author[0]}
             </div>
             <div>
-              <div className="text-sm font-semibold text-white">{BRAND.testimonial.author}</div>
-              <div className="text-xs text-white/45">{BRAND.testimonial.role}</div>
+              <div className="text-sm font-semibold text-ink">{BRAND.testimonial.author}</div>
+              <div className="text-xs text-ink/45">{BRAND.testimonial.role}</div>
             </div>
           </div>
         </GlassPanel>

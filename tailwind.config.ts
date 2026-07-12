@@ -5,11 +5,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Monochrome base + royal red accent.
-        ink: '#0A0A0A', // page background
-        paper: '#FAFAFA', // primary text / solid CTAs
-        royal: '#9B111E', // royal red — accent fills, gradients
-        flame: '#E8323F', // legible red for text/glows on dark
+        // Light theme: white canvas + royal red accent.
+        paper: '#FFFFFF', // page background / surfaces
+        ink: '#181818', // primary text / dark strokes
+        royal: '#9B111E', // royal red — primary accent
+        flame: '#C4142A', // brighter royal for gradients / hover
       },
       fontFamily: {
         display: ['var(--font-display)', 'sans-serif'],

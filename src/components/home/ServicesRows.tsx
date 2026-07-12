@@ -29,7 +29,7 @@ const ask = (prompt: string) => window.dispatchEvent(new CustomEvent('ellie:ask'
 /** Editorial, text-heavy service rows. Every action routes through the assistant. */
 export default function ServicesRows() {
   return (
-    <div className="divide-y divide-white/10 border-y border-white/10">
+    <div className="divide-y divide-black/10 border-y border-black/10">
       {SERVICES.map((s, i) => (
         <motion.div
           key={s.n}
@@ -39,16 +39,16 @@ export default function ServicesRows() {
           transition={{ duration: 0.5, delay: i * 0.07 }}
           className="group grid gap-4 py-10 sm:grid-cols-[80px_1fr_auto] sm:items-start sm:gap-8"
         >
-          <span className="font-mono text-sm text-white/30">{s.n}</span>
+          <span className="font-mono text-sm text-royal/70">{s.n}</span>
           <div>
-            <h3 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
+            <h3 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
               {s.title}
             </h3>
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/60">{s.body}</p>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink/60">{s.body}</p>
           </div>
           <button
             onClick={() => ask(s.prompt)}
-            className="justify-self-start whitespace-nowrap rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-paper transition group-hover:border-flame/60 hover:bg-gradient-to-r hover:from-flame hover:to-royal hover:border-transparent sm:justify-self-end"
+            className="justify-self-start whitespace-nowrap rounded-full border border-ink/25 px-5 py-2.5 text-sm font-semibold text-ink transition group-hover:border-transparent hover:bg-gradient-to-r hover:from-royal hover:to-flame hover:text-white sm:justify-self-end"
           >
             Ask {BRAND.assistant} →
           </button>

@@ -21,14 +21,14 @@ export function Section({ id, eyebrow, title, subtitle, children }: SectionProps
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         {eyebrow && (
-          <span className="mb-3 inline-block rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs uppercase tracking-widest text-white/50">
+          <span className="mb-3 inline-block rounded-full border border-royal/25 bg-royal/[0.06] px-3 py-1 text-xs uppercase tracking-widest text-royal">
             {eyebrow}
           </span>
         )}
-        <h2 className="max-w-2xl font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+        <h2 className="max-w-2xl font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
           {title}
         </h2>
-        {subtitle && <p className="mt-3 max-w-2xl text-base text-white/55">{subtitle}</p>}
+        {subtitle && <p className="mt-3 max-w-2xl text-base text-ink/55">{subtitle}</p>}
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 24 }}

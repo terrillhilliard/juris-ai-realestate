@@ -161,17 +161,17 @@ export default function ChatHero() {
       <GlassPanel elevation="floating" glow id="assistant">
         <div className="flex h-[540px] flex-col p-5 sm:h-[560px] sm:p-6">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="flex items-center justify-between border-b border-black/[0.08] pb-4">
             <div className="flex items-center gap-3">
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-flame to-royal text-lg font-bold text-paper shadow-[0_0_24px_-6px_rgba(232,50,63,0.8)]">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-royal to-flame text-lg font-bold text-white shadow-[0_6px_20px_-6px_rgba(155,17,30,0.7)]">
                 {BRAND.assistant[0]}
               </div>
               <div>
-                <div className="font-display text-base font-semibold text-paper">
+                <div className="font-display text-base font-semibold text-ink">
                   {BRAND.assistant} — {BRAND.assistantTagline}
                 </div>
-                <span className="flex items-center gap-1.5 text-xs text-white/50">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-flame" />
+                <span className="flex items-center gap-1.5 text-xs text-ink/50">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-royal" />
                   Online · answers instantly, 24/7
                 </span>
               </div>
@@ -180,17 +180,17 @@ export default function ChatHero() {
               <button
                 onClick={startVoice}
                 aria-label="Speak with the AI voice agent"
-                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-flame to-royal px-4 py-2.5 text-xs font-semibold text-paper shadow-[0_0_30px_-8px_rgba(232,50,63,0.9)] transition hover:brightness-110"
+                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-royal to-flame px-4 py-2.5 text-xs font-semibold text-white shadow-[0_8px_24px_-8px_rgba(155,17,30,0.7)] transition hover:brightness-110"
               >
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-paper/60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-paper" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
                 </span>
                 <PhoneIcon className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">Speak with AI</span>
               </button>
               {voiceHint && (
-                <div className="absolute right-0 top-12 z-20 w-52 rounded-xl border border-white/15 bg-ink/95 p-3 text-xs text-white/70 shadow-xl">
+                <div className="absolute right-0 top-12 z-20 w-52 rounded-xl border border-black/10 bg-white p-3 text-xs text-ink/70 shadow-xl">
                   Voice agent is still loading — try again in a moment, or use the voice bubble
                   in the corner.
                 </div>
@@ -208,8 +208,8 @@ export default function ChatHero() {
                   animate={{ opacity: 1, y: 0 }}
                   className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                     m.role === 'ai'
-                      ? 'border border-white/10 bg-white/[0.06] text-paper'
-                      : 'ml-auto bg-paper text-ink'
+                      ? 'border border-black/[0.06] bg-black/[0.035] text-ink'
+                      : 'ml-auto bg-gradient-to-br from-royal to-flame text-white'
                   }`}
                 >
                   {m.text}
@@ -217,11 +217,11 @@ export default function ChatHero() {
               ))}
             </AnimatePresence>
             {typing && (
-              <div className="flex w-16 items-center gap-1 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3">
+              <div className="flex w-16 items-center gap-1 rounded-2xl border border-black/[0.06] bg-black/[0.035] px-4 py-3">
                 {[0, 1, 2].map((d) => (
                   <span
                     key={d}
-                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/70"
+                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-royal/70"
                     style={{ animationDelay: `${d * 0.15}s` }}
                   />
                 ))}
@@ -236,7 +236,7 @@ export default function ChatHero() {
                 <button
                   key={q}
                   onClick={() => void send(q)}
-                  className="rounded-full border border-white/25 bg-white/[0.06] px-3.5 py-1.5 text-xs font-medium text-paper transition hover:border-white/50 hover:bg-white/[0.14]"
+                  className="rounded-full border border-royal/35 bg-royal/[0.06] px-3.5 py-1.5 text-xs font-medium text-royal transition hover:bg-royal/[0.14]"
                 >
                   {q}
                 </button>
@@ -251,24 +251,24 @@ export default function ChatHero() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything — or say where you want to go…"
-              className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-paper placeholder-white/35 outline-none transition focus:border-white/40"
+              className="min-w-0 flex-1 rounded-xl border border-black/12 bg-black/[0.03] px-4 py-3 text-sm text-ink placeholder-ink/35 outline-none transition focus:border-royal/50"
             />
             <button
               type="submit"
               disabled={typing || !input.trim()}
-              className="rounded-xl bg-gradient-to-r from-flame to-royal px-5 font-semibold text-paper transition hover:brightness-110 disabled:opacity-40"
+              className="rounded-xl bg-gradient-to-r from-royal to-flame px-5 font-semibold text-white transition hover:brightness-110 disabled:opacity-40"
             >
               ↑
             </button>
           </form>
 
           {/* Persistent nav — the chatbot is the menu */}
-          <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1.5 border-t border-white/10 pt-3">
+          <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1.5 border-t border-black/[0.08] pt-3">
             {NAV_CHIPS.map((c) => (
               <button
                 key={c.label}
                 onClick={() => void send(c.prompt)}
-                className="text-xs text-white/45 underline-offset-4 transition hover:text-paper hover:underline"
+                className="text-xs text-ink/45 underline-offset-4 transition hover:text-royal hover:underline"
               >
                 {c.label}
               </button>

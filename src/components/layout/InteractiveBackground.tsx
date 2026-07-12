@@ -9,10 +9,11 @@ import { useEffect, useRef } from 'react';
  * Performance: capped DPR, single rAF, paused when the tab is hidden.
  */
 
-const FLAME = [232, 50, 63]; // #E8323F
+const ROYAL = [155, 17, 30]; // #9B111E — interactive accent
+const INKDOT = [24, 24, 24]; // resting dot color on white
 const SPACING = 34; // px between dots (CSS px)
 const RADIUS = 190; // interactive falloff radius
-const BASE_ALPHA = 0.05;
+const BASE_ALPHA = 0.06;
 
 export default function InteractiveBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -70,9 +71,9 @@ export default function InteractiveBackground() {
 
     const drawSpotlight = (px: number, py: number, intensity: number) => {
       const g = ctx.createRadialGradient(px, py, 0, px, py, RADIUS * 1.8);
-      g.addColorStop(0, `rgba(${FLAME[0]},${FLAME[1]},${FLAME[2]},${0.1 * intensity})`);
-      g.addColorStop(0.4, `rgba(${FLAME[0]},${FLAME[1]},${FLAME[2]},${0.04 * intensity})`);
-      g.addColorStop(1, 'rgba(232,50,63,0)');
+      g.addColorStop(0, `rgba(${ROYAL[0]},${ROYAL[1]},${ROYAL[2]},${0.09 * intensity})`);
+      g.addColorStop(0.4, `rgba(${ROYAL[0]},${ROYAL[1]},${ROYAL[2]},${0.035 * intensity})`);
+      g.addColorStop(1, 'rgba(155,17,30,0)');
       ctx.fillStyle = g;
       ctx.fillRect(px - RADIUS * 1.8, py - RADIUS * 1.8, RADIUS * 3.6, RADIUS * 3.6);
     };
@@ -115,19 +116,19 @@ export default function InteractiveBackground() {
 
           let alpha = BASE_ALPHA;
           let size = 1;
-          let r = 255;
-          let g = 255;
-          let b = 255;
+          let r = INKDOT[0];
+          let g = INKDOT[1];
+          let b = INKDOT[2];
 
           if (d2 < R2) {
             const prox = 1 - Math.sqrt(d2) / RADIUS; // 0..1
             const e = prox * prox;
-            alpha = BASE_ALPHA + e * 0.55;
+            alpha = BASE_ALPHA + e * 0.6;
             size = 1 + e * 2.2;
-            // Tint toward flame red near the focal point.
-            r = Math.round(255 + (FLAME[0] - 255) * e);
-            g = Math.round(255 + (FLAME[1] - 255) * e);
-            b = Math.round(255 + (FLAME[2] - 255) * e);
+            // Tint from ink toward royal red near the focal point.
+            r = Math.round(INKDOT[0] + (ROYAL[0] - INKDOT[0]) * e);
+            g = Math.round(INKDOT[1] + (ROYAL[1] - INKDOT[1]) * e);
+            b = Math.round(INKDOT[2] + (ROYAL[2] - INKDOT[2]) * e);
           }
 
           ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;

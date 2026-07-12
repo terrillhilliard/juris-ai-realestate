@@ -7,16 +7,16 @@ interface CTAButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary';
 }
 
-/** High-contrast monochrome CTAs: solid white / outlined. */
+/** Royal-red primary / outlined-ink secondary CTAs on the white theme. */
 export function CTAButton({ variant = 'primary', className, children, ...rest }: CTAButtonProps) {
   return (
     <button
       className={clsx(
         'rounded-xl px-6 py-3.5 text-sm font-semibold transition-all duration-200',
         variant === 'primary' &&
-          'bg-gradient-to-r from-flame to-royal text-paper shadow-[0_8px_34px_-10px_rgba(232,50,63,0.7)] hover:brightness-110 hover:shadow-[0_8px_44px_-8px_rgba(232,50,63,0.85)]',
+          'bg-gradient-to-r from-royal to-flame text-white shadow-[0_10px_32px_-10px_rgba(155,17,30,0.6)] hover:brightness-110 hover:shadow-[0_10px_42px_-8px_rgba(155,17,30,0.75)]',
         variant === 'secondary' &&
-          'border border-white/20 bg-white/[0.04] text-paper backdrop-blur-md hover:border-white/40 hover:bg-white/[0.09]',
+          'border border-ink/20 bg-white/60 text-ink backdrop-blur-md hover:border-ink/40 hover:bg-white',
         className,
       )}
       {...rest}

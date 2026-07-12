@@ -47,15 +47,15 @@ export default function EastBayMap() {
           {/* Carquinez Strait — water to the north */}
           <path
             d="M0,66 C130,38 300,54 460,30 C600,10 720,26 800,12 L800,0 L0,0 Z"
-            fill="rgba(255,255,255,0.05)"
+            fill="rgba(0,0,0,0.05)"
           />
           <path
             d="M0,66 C130,38 300,54 460,30 C600,10 720,26 800,12"
             fill="none"
-            stroke="rgba(255,255,255,0.14)"
+            stroke="rgba(0,0,0,0.14)"
             strokeWidth="1.5"
           />
-          <text x="620" y="46" fill="rgba(255,255,255,0.3)" fontSize="13" fontStyle="italic">
+          <text x="620" y="46" fill="rgba(0,0,0,0.3)" fontSize="13" fontStyle="italic">
             Carquinez Strait
           </text>
 
@@ -68,14 +68,14 @@ export default function EastBayMap() {
               rx={r * 1.45}
               ry={r}
               fill="none"
-              stroke={`rgba(255,255,255,${0.07 + i * 0.03})`}
+              stroke={`rgba(0,0,0,${0.07 + i * 0.03})`}
               strokeWidth="1"
             />
           ))}
-          <text x="712" y="456" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="12">
+          <text x="712" y="456" textAnchor="middle" fill="rgba(0,0,0,0.4)" fontSize="12">
             ▲
           </text>
-          <text x="712" y="536" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="12">
+          <text x="712" y="536" textAnchor="middle" fill="rgba(0,0,0,0.3)" fontSize="12">
             Mt. Diablo
           </text>
 
@@ -83,7 +83,7 @@ export default function EastBayMap() {
           <path
             d="M172,88 C240,160 320,220 337,299 C350,360 330,380 327,411 C324,450 340,510 360,556"
             fill="none"
-            stroke="rgba(255,255,255,0.12)"
+            stroke="rgba(0,0,0,0.12)"
             strokeWidth="2.5"
             strokeDasharray="1 7"
             strokeLinecap="round"
@@ -91,7 +91,7 @@ export default function EastBayMap() {
           <path
             d="M96,522 C140,496 240,450 327,411"
             fill="none"
-            stroke="rgba(255,255,255,0.12)"
+            stroke="rgba(0,0,0,0.12)"
             strokeWidth="2.5"
             strokeDasharray="1 7"
             strokeLinecap="round"
@@ -99,15 +99,15 @@ export default function EastBayMap() {
           <path
             d="M120,120 C220,150 320,190 410,219 C500,248 580,280 640,317"
             fill="none"
-            stroke="rgba(255,255,255,0.10)"
+            stroke="rgba(0,0,0,0.10)"
             strokeWidth="2"
             strokeDasharray="1 7"
             strokeLinecap="round"
           />
-          <text x="352" y="345" fill="rgba(255,255,255,0.28)" fontSize="11">
+          <text x="352" y="345" fill="rgba(0,0,0,0.28)" fontSize="11">
             I-680
           </text>
-          <text x="180" y="502" fill="rgba(255,255,255,0.28)" fontSize="11">
+          <text x="180" y="502" fill="rgba(0,0,0,0.28)" fontSize="11">
             SR-24
           </text>
 
@@ -131,20 +131,20 @@ export default function EastBayMap() {
                 }}
               >
                 {/* halo */}
-                <circle cx={x} cy={y} r={isActive ? 26 : 20} fill="rgba(255,255,255,0.06)" />
+                <circle cx={x} cy={y} r={isActive ? 26 : 20} fill="rgba(0,0,0,0.06)" />
                 <circle
                   cx={x}
                   cy={y}
                   r={isActive ? 13 : 10}
-                  fill={isActive ? '#E8323F' : 'rgba(255,255,255,0.9)'}
-                  stroke={isActive ? 'rgba(232,50,63,0.4)' : 'rgba(255,255,255,0.25)'}
+                  fill={isActive ? '#9B111E' : 'rgba(0,0,0,0.9)'}
+                  stroke={isActive ? 'rgba(155,17,30,0.45)' : 'rgba(0,0,0,0.25)'}
                   strokeWidth="5"
                 />
                 <text
                   x={x}
                   y={y - (isActive ? 34 : 28)}
                   textAnchor="middle"
-                  fill="#FAFAFA"
+                  fill="#181818"
                   fontSize="16"
                   fontWeight="600"
                 >
@@ -154,7 +154,7 @@ export default function EastBayMap() {
                   x={x}
                   y={y + 38}
                   textAnchor="middle"
-                  fill="rgba(255,255,255,0.55)"
+                  fill="rgba(0,0,0,0.55)"
                   fontSize="13"
                   fontFamily="monospace"
                 >
@@ -173,33 +173,33 @@ export default function EastBayMap() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.18 }}
-              className="pointer-events-none absolute z-20 w-56 -translate-x-1/2 rounded-xl border border-white/15 bg-[#121212]/95 p-3.5 text-xs shadow-2xl backdrop-blur-xl"
+              className="pointer-events-none absolute z-20 w-56 -translate-x-1/2 rounded-xl border border-black/10 bg-white/95 p-3.5 text-xs shadow-2xl backdrop-blur-xl"
               style={{
                 left: `clamp(120px, ${(pos[0] / VB.w) * 100}%, calc(100% - 120px))`,
                 top: `${(pos[1] / VB.h) * 100}%`,
                 transform: 'translate(-50%, calc(-100% - 46px))',
               }}
             >
-              <div className="mb-1.5 text-sm font-semibold text-paper">📍 {active.name}</div>
+              <div className="mb-1.5 text-sm font-semibold text-ink">📍 {active.name}</div>
               <div className="flex justify-between py-0.5">
-                <span className="text-white/50">Median price</span>
-                <span className="font-mono text-paper">{fmtPrice(active.medianPrice)}</span>
+                <span className="text-ink/55">Median price</span>
+                <span className="font-mono text-ink">{fmtPrice(active.medianPrice)}</span>
               </div>
               <div className="flex justify-between py-0.5">
-                <span className="text-white/50">Days on market</span>
-                <span className="font-mono text-paper">~{active.daysOnMarket}</span>
+                <span className="text-ink/55">Days on market</span>
+                <span className="font-mono text-ink">~{active.daysOnMarket}</span>
               </div>
-              <div className="mt-1.5 border-t border-white/10 pt-1.5 text-white/55">
+              <div className="mt-1.5 border-t border-black/10 pt-1.5 text-ink/60">
                 {active.vibe}
               </div>
-              <div className="mt-1.5 text-[10px] text-white/35">
+              <div className="mt-1.5 text-[10px] text-ink/45">
                 Tap to ask {BRAND.assistant} about {active.name}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <p className="pb-1 pt-2 text-center text-xs text-white/35">
+        <p className="pb-1 pt-2 text-center text-xs text-ink/45">
           Tap a city — {BRAND.assistant} knows the numbers. Market data illustrative.
         </p>
       </div>

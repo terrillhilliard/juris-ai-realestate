@@ -4,24 +4,27 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { CTAButton } from '@/components/ui/CTAButton';
+import { BRAND } from '@/lib/brand';
 
 interface BookingModalProps {
   open: boolean;
   onClose: () => void;
+  /** Preselect the service, e.g. from a services card CTA. */
+  service?: string;
 }
 
-export function BookingModal({ open, onClose }: BookingModalProps) {
+export function BookingModal({ open, onClose, service }: BookingModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    // Mock async booking call — swap for a real scheduler (Calendly, etc.).
+    // Mock async — in production this posts to the CRM / JURIS AI intake.
     setTimeout(() => {
       setSending(false);
       setSubmitted(true);
-    }, 1200);
+    }, 1100);
   };
 
   const close = () => {
@@ -53,9 +56,12 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                   <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-positive/15 text-2xl">
                     ✓
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-white">Demo requested</h3>
+                  <h3 className="font-display text-xl font-semibold text-white">
+                    Request received!
+                  </h3>
                   <p className="mt-2 text-sm text-white/55">
-                    Our team will reach out within one business day to schedule your live walkthrough.
+                    Laurie will reach out shortly. Want an answer right now?{' '}
+                    {BRAND.assistant} can help 24/7 — tap the phone or chat icon below.
                   </p>
                   <CTAButton variant="secondary" className="mt-6" onClick={close}>
                     Close
@@ -63,30 +69,57 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                 </div>
               ) : (
                 <>
-                  <h3 className="font-display text-xl font-semibold text-white">Book a live demo</h3>
+                  <h3 className="font-display text-xl font-semibold text-white">
+                    Work with Laurie
+                  </h3>
                   <p className="mt-1 text-sm text-white/50">
-                    See JURIS AI answer, qualify, and book real estate leads in real time.
+                    Tell us a little about your plans — buying, selling, or investing in the East
+                    Bay.
                   </p>
                   <form onSubmit={submit} className="mt-6 space-y-4">
                     <input
                       required
                       placeholder="Full name"
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-cyanAI/50"
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-kwred/60"
                     />
                     <input
                       required
-                      type="email"
-                      placeholder="Work email"
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-cyanAI/50"
+                      type="tel"
+                      placeholder="Phone number"
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-kwred/60"
                     />
-                    <input
-                      placeholder="Brokerage / team name"
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-cyanAI/50"
-                    />
+                    <select
+                      defaultValue={service ?? ''}
+                      required
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-kwred/60 [&>option]:bg-[#141016]"
+                    >
+                      <option value="" disabled>
+                        I&apos;m looking to…
+                      </option>
+                      <option value="buy">Buy a home</option>
+                      <option value="sell">Sell my home</option>
+                      <option value="invest">Invest</option>
+                    </select>
+                    <select
+                      defaultValue=""
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-kwred/60 [&>option]:bg-[#141016]"
+                    >
+                      <option value="" disabled>
+                        Preferred area (optional)
+                      </option>
+                      {BRAND.markets.map((m) => (
+                        <option key={m} value={m}>
+                          {m}
+                        </option>
+                      ))}
+                    </select>
                     <CTAButton type="submit" className="w-full" disabled={sending}>
-                      {sending ? 'Requesting…' : 'Request demo'}
+                      {sending ? 'Sending…' : 'Request a consult'}
                     </CTAButton>
                   </form>
+                  <p className="mt-3 text-center text-[11px] text-white/30">
+                    Demo form — submissions are simulated
+                  </p>
                 </>
               )}
             </GlassPanel>

@@ -21,7 +21,7 @@ export function Section({ id, eyebrow, title, subtitle, children }: SectionProps
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         {eyebrow && (
-          <span className="mb-3 inline-block rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs uppercase tracking-widest text-cyanAI">
+          <span className="mb-3 inline-block rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs uppercase tracking-widest text-kwrose">
             {eyebrow}
           </span>
         )}

@@ -3,50 +3,54 @@ import type { Scenario } from '@/lib/types';
 export const SCENARIOS: Scenario[] = [
   {
     id: 'portal-buyer',
-    title: 'New Buyer From Portal',
+    title: 'First-Time Buyer From Zillow',
     icon: '🏠',
     leadType: 'buyer',
-    situation: 'Inquiry on a $485k listing at 9:42pm — after office hours.',
+    situation:
+      'A first-time buyer inquires on a Pleasant Hill 3-bed at 9:42pm — long after office hours.',
     aiResponse:
-      'Ava answers in 2 rings, confirms pre-approval status, and books a Saturday showing before the buyer opens the next listing tab.',
+      'Ellie answers instantly, walks them through pre-approval basics, and books a Saturday showing with Laurie before they open the next Zillow tab.',
     speedToBooking: '3m 12s',
     projectedLTV: '$40,000+',
-    color: '#6ee7ff',
+    color: '#FF5A6E',
   },
   {
     id: 'seller-consult',
-    title: 'Seller Listing Consult',
+    title: 'Walnut Creek Listing Consult',
     icon: '📋',
     leadType: 'seller',
-    situation: 'Homeowner requests a valuation while your team is at a closing.',
+    situation:
+      'A Walnut Creek homeowner wants a pricing and staging consult while Laurie is at a closing.',
     aiResponse:
-      'Ava captures property details, timeline, and motivation, then books a listing consult with your top listing agent for Tuesday 4pm.',
+      'Ellie captures the property details, timeline, and motivation, then books a listing consult — pricing and staging plan included — for Tuesday 4pm.',
     speedToBooking: '4m 05s',
     projectedLTV: '$52,000+',
-    color: '#c8a26a',
+    color: '#C8A26A',
   },
   {
     id: 'past-client-referral',
-    title: 'Past Client Referral',
+    title: 'Past-Client Referral, Lafayette',
     icon: '🤝',
     leadType: 'past_client',
-    situation: 'A past client calls to refer their coworker — call goes unanswered on Sunday.',
+    situation:
+      'A past client calls on Sunday to refer their coworker who is relocating to Lafayette.',
     aiResponse:
-      'Ava recognizes the past client, thanks them by name, collects the referral contact, and schedules an intro call for Monday 9am.',
+      'Ellie recognizes the past client, thanks them by name, collects the referral contact, and schedules an intro call with Laurie for Monday 9am.',
     speedToBooking: '2m 40s',
     projectedLTV: '$80,000+',
     color: '#4ade80',
   },
   {
     id: 'investor-inquiry',
-    title: 'Investor Multi-Unit Inquiry',
+    title: 'Investor Duplexes in Concord',
     icon: '📈',
     leadType: 'investor',
-    situation: 'Out-of-state investor asks about three duplexes via SMS at 6am.',
+    situation:
+      'An out-of-state investor texts at 6am about two Concord duplexes — fix & hold strategy.',
     aiResponse:
-      'Ava qualifies budget, financing structure, and 1031 timeline over SMS, then books a portfolio review video call the same day.',
+      'Ellie qualifies budget, financing structure, and 1031 timeline over SMS, then books a same-day portfolio review video call with Laurie.',
     speedToBooking: '6m 30s',
     projectedLTV: '$120,000+',
-    color: '#8b7bff',
+    color: '#E8E6EA',
   },
 ];

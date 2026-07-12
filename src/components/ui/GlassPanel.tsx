@@ -39,7 +39,7 @@ export const GlassPanel = forwardRef<HTMLDivElement, GlassPanelProps>(
         'before:bg-gradient-to-b before:from-white/[0.14] before:to-transparent before:opacity-70',
         ELEVATION[elevation],
         glow &&
-          'after:pointer-events-none after:absolute after:-inset-px after:rounded-2xl after:bg-gradient-to-br after:from-cyanAI/25 after:via-transparent after:to-gold/25',
+          'after:pointer-events-none after:absolute after:-inset-px after:rounded-2xl after:bg-gradient-to-br after:from-kwred/25 after:via-transparent after:to-gold/25',
         interactive &&
           'transition-transform duration-300 ease-out will-change-transform hover:-translate-y-1 hover:border-white/20',
         className,

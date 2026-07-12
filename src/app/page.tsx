@@ -3,7 +3,7 @@
 import { useState } from 'react';
 /* eslint-disable @next/next/no-img-element */
 import { motion } from 'framer-motion';
-import Hero3D from '@/components/hero/Hero3D';
+import EastBayMap from '@/components/home/EastBayMap';
 import ChatHero, { PhoneIcon } from '@/components/ai/ChatHero';
 import ChatFAB from '@/components/ai/ChatFAB';
 import ElevenLabsWidget from '@/components/ai/ElevenLabsWidget';
@@ -35,13 +35,13 @@ export default function Home() {
       <section className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-4 pb-16 pt-28 sm:px-8">
         {/* Spatial orbs */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="orb left-[6%] top-[16%] h-56 w-56 bg-royal/25" />
+          <div className="orb left-[6%] top-[16%] h-56 w-56 bg-royal/10" />
           <div
             className="orb right-[8%] top-[42%] h-72 w-72 bg-white/[0.06]"
             style={{ animationDelay: '-4s' }}
           />
           <div
-            className="orb bottom-[6%] left-[30%] h-48 w-48 bg-royal/15"
+            className="orb bottom-[6%] left-[30%] h-48 w-48 bg-white/[0.05]"
             style={{ animationDelay: '-7s' }}
           />
         </div>
@@ -98,10 +98,8 @@ export default function Home() {
       <section className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-4">
           {STATS.map((s) => (
-            <div key={s.k} className="group bg-ink p-7 transition-colors hover:bg-[#120a0b] sm:p-9">
-              <div className="font-mono text-4xl font-bold text-paper transition-colors group-hover:text-flame sm:text-5xl">
-                {s.k}
-              </div>
+            <div key={s.k} className="group bg-ink p-7 transition-colors hover:bg-white/[0.03] sm:p-9">
+              <div className="font-mono text-4xl font-bold text-paper sm:text-5xl">{s.k}</div>
               <div className="mt-2 text-sm leading-snug text-white/50">{s.v}</div>
             </div>
           ))}
@@ -128,14 +126,14 @@ export default function Home() {
         <MortgageCalculator />
       </Section>
 
-      {/* Markets — 3D interlude */}
+      {/* Markets — interactive East Bay map */}
       <Section
         id="markets"
         eyebrow="Neighborhoods"
         title="Six cities. One neighbor."
-        subtitle="Pleasant Hill · Walnut Creek · Concord · Clayton · Martinez · Lafayette — hover a building for the numbers (illustrative)."
+        subtitle="Laurie's corner of Contra Costa County, from the Carquinez Strait to Mt. Diablo. Tap any city and Ellie picks up the conversation."
       >
-        <Hero3D />
+        <EastBayMap />
       </Section>
 
       {/* About + testimonial */}

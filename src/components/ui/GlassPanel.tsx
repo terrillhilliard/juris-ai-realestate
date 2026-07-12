@@ -16,7 +16,7 @@ const ELEVATION: Record<Elevation, string> = {
   raised:
     'shadow-[0_8px_30px_-12px_rgba(0,0,0,0.7),0_1px_0_0_rgba(255,255,255,0.08)_inset]',
   floating:
-    'shadow-[0_32px_80px_-24px_rgba(0,0,0,0.9),0_18px_50px_-20px_rgba(155,17,30,0.25),0_1px_0_0_rgba(255,255,255,0.10)_inset]',
+    'shadow-[0_32px_80px_-24px_rgba(0,0,0,0.9),0_18px_50px_-20px_rgba(155,17,30,0.12),0_1px_0_0_rgba(255,255,255,0.10)_inset]',
 };
 
 /**

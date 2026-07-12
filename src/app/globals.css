@@ -20,8 +20,8 @@ body {
   pointer-events: none;
   background:
     radial-gradient(720px 480px at 50% -5%, rgba(255, 255, 255, 0.06), transparent 60%),
-    radial-gradient(560px 420px at 8% 38%, rgba(155, 17, 30, 0.1), transparent 62%),
-    radial-gradient(640px 480px at 94% 72%, rgba(155, 17, 30, 0.07), transparent 60%),
+    radial-gradient(560px 420px at 8% 38%, rgba(155, 17, 30, 0.05), transparent 62%),
+    radial-gradient(640px 480px at 94% 72%, rgba(155, 17, 30, 0.035), transparent 60%),
     radial-gradient(520px 400px at 45% 105%, rgba(255, 255, 255, 0.03), transparent 60%);
 }
 
@@ -37,10 +37,10 @@ body {
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(232, 50, 63, 0.55),
+    rgba(232, 50, 63, 0.26),
     rgba(255, 255, 255, 0.28) 30%,
     rgba(255, 255, 255, 0.06) 55%,
-    rgba(155, 17, 30, 0.4)
+    rgba(155, 17, 30, 0.18)
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -86,7 +86,7 @@ body {
 }
 
 ::selection {
-  background: rgba(155, 17, 30, 0.45);
+  background: rgba(155, 17, 30, 0.3);
 }
 
 *::-webkit-scrollbar {

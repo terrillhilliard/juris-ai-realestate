@@ -1,4 +1,5 @@
 import { BRAND } from '@/lib/brand';
+import { CITY_MARKETS } from '@/lib/mock/cities';
 
 /**
  * Scripted qualification engine for the demo chat.
@@ -102,6 +103,26 @@ export function detectNav(msg: string): NavTarget | undefined {
   return NAV_RULES.find((r) => r.match.test(msg))?.target;
 }
 
+const fmtPrice = (n: number) =>
+  n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(2)}M` : `$${Math.round(n / 1000)}k`;
+
+/**
+ * City market Q&A — "Tell me about Walnut Creek" (map taps route here).
+ * Returns a stats reply and remembers the city so qualification skips
+ * the "which area?" question.
+ */
+export function cityInfoTurn(state: ChatState, msg: string): ChatTurnResult | undefined {
+  if (!/tell me about|about|market|info|stats|price/i.test(msg)) return undefined;
+  const city = CITY_MARKETS.find((c) => msg.toLowerCase().includes(c.name.toLowerCase()));
+  if (!city) return undefined;
+  return {
+    state: { ...state, city: city.name },
+    reply: `📍 ${city.name} — median around ${fmtPrice(city.medianPrice)}, homes typically go in ~${city.daysOnMarket} days. ${city.vibe}. Thinking of buying, selling, or investing there?`,
+    quickReplies: ['🏠 Buy', '💰 Sell', '📈 Invest'],
+    typingMs: 1000,
+  };
+}
+
 /** Persistent nav chips shown under the chat input. */
 export const NAV_CHIPS = [
   { label: 'Services', prompt: 'Show me your services' },
@@ -140,6 +161,21 @@ export function nextTurn(state: ChatState, userMessage: string): ChatTurnResult 
             "Happy to help! Just so I point you the right way — are you looking to buy a home, sell one, or invest in the East Bay?",
           quickReplies: ['🏠 Buy', '💰 Sell', '📈 Invest'],
           typingMs: 900,
+        };
+      }
+      // City already known (e.g. from the map) — skip straight to budget.
+      if (state.city) {
+        return {
+          state: { ...state, stage: 'budget', intent },
+          reply:
+            intent === 'sell'
+              ? `${state.city} it is. Roughly what do you expect the home is worth?`
+              : `${state.city} it is. What budget range are you working with?`,
+          quickReplies:
+            intent === 'sell'
+              ? ['Under $800k', '$800k–$1.2M', 'Over $1.2M']
+              : ['Under $700k', '$700k–$1M', 'Over $1M'],
+          typingMs: 1000,
         };
       }
       const prompts = {

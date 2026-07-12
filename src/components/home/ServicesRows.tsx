@@ -39,7 +39,7 @@ export default function ServicesRows() {
           transition={{ duration: 0.5, delay: i * 0.07 }}
           className="group grid gap-4 py-10 sm:grid-cols-[80px_1fr_auto] sm:items-start sm:gap-8"
         >
-          <span className="font-mono text-sm text-flame/70">{s.n}</span>
+          <span className="font-mono text-sm text-white/30">{s.n}</span>
           <div>
             <h3 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
               {s.title}

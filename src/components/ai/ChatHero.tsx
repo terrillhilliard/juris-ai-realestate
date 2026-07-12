@@ -6,6 +6,7 @@ import { GlassPanel } from '@/components/ui/GlassPanel';
 import { BRAND } from '@/lib/brand';
 import { openVoiceAgent } from '@/lib/voiceWidget';
 import {
+  cityInfoTurn,
   detectNav,
   INITIAL_STATE,
   NAV_CHIPS,
@@ -77,6 +78,18 @@ export default function ChatHero() {
       setQuickReplies([]);
       setMessages((m) => [...m, { role: 'user', text }]);
       setTyping(true);
+
+      // City Q&A from the map ("Tell me about Walnut Creek") takes priority.
+      const cityTurn = cityInfoTurn(chatState, text);
+      if (cityTurn) {
+        await withTyping(null, cityTurn.typingMs);
+        setTyping(false);
+        setChatState(cityTurn.state);
+        setMessages((m) => [...m, { role: 'ai', text: cityTurn.reply }]);
+        setQuickReplies(cityTurn.quickReplies);
+        busyRef.current = false;
+        return;
+      }
 
       const isChipPrompt = NAV_CHIPS.some((c) => c.prompt === text);
       const navOk =
@@ -208,7 +221,7 @@ export default function ChatHero() {
                 {[0, 1, 2].map((d) => (
                   <span
                     key={d}
-                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-flame"
+                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/70"
                     style={{ animationDelay: `${d * 0.15}s` }}
                   />
                 ))}
@@ -223,7 +236,7 @@ export default function ChatHero() {
                 <button
                   key={q}
                   onClick={() => void send(q)}
-                  className="rounded-full border border-flame/40 bg-royal/[0.12] px-3.5 py-1.5 text-xs font-medium text-paper transition hover:border-flame/70 hover:bg-royal/[0.25]"
+                  className="rounded-full border border-white/25 bg-white/[0.06] px-3.5 py-1.5 text-xs font-medium text-paper transition hover:border-white/50 hover:bg-white/[0.14]"
                 >
                   {q}
                 </button>
@@ -238,7 +251,7 @@ export default function ChatHero() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything — or say where you want to go…"
-              className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-paper placeholder-white/35 outline-none transition focus:border-flame/60"
+              className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-paper placeholder-white/35 outline-none transition focus:border-white/40"
             />
             <button
               type="submit"
@@ -255,7 +268,7 @@ export default function ChatHero() {
               <button
                 key={c.label}
                 onClick={() => void send(c.prompt)}
-                className="text-xs text-white/45 underline-offset-4 transition hover:text-flame hover:underline"
+                className="text-xs text-white/45 underline-offset-4 transition hover:text-paper hover:underline"
               >
                 {c.label}
               </button>

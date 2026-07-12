@@ -5,13 +5,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        void: '#0B0A0C',
-        kwred: '#CE011F', // Keller Williams red
-        kwrose: '#FF5A6E', // legible red variant for text on dark
-        kwdark: '#8F0116', // deep red for gradient stops
-        gold: '#C8A26A',
-        positive: '#4ade80',
-        danger: '#ff6b6b',
+        // Monochromatic scale — one hue (none), high contrast.
+        ink: '#0A0A0A', // page background
+        paper: '#FAFAFA', // primary text / solid CTAs
       },
       fontFamily: {
         display: ['var(--font-display)', 'sans-serif'],

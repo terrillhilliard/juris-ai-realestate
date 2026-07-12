@@ -16,7 +16,7 @@ export default function AboutLaurie() {
         transition={{ duration: 0.5 }}
       >
         <GlassPanel elevation="floating" glow className="h-full overflow-hidden p-0">
-          <div className="relative flex h-full min-h-[380px] flex-col justify-end bg-gradient-to-b from-kwred/[0.12] via-transparent to-black/60">
+          <div className="relative flex h-full min-h-[380px] flex-col justify-end bg-gradient-to-b from-white/[0.05] via-transparent to-black/60">
             <img
               src={BRAND.assets.standing}
               alt={`${BRAND.agent}, ${BRAND.brokerage}`}
@@ -40,7 +40,7 @@ export default function AboutLaurie() {
         className="flex flex-col gap-6"
       >
         <GlassPanel elevation="raised" className="flex-1 p-6 sm:p-8">
-          <span className="text-xs uppercase tracking-widest text-gold">{BRAND.tagline}</span>
+          <span className="text-xs uppercase tracking-widest text-white/50">{BRAND.tagline}</span>
           <p className="mt-3 text-base leading-relaxed text-white/75">
             Laurie has lived and worked in the {BRAND.region} for {BRAND.yearsInEastBay} years —
             she works, shops, hikes, and volunteers in the same communities she sells in. From
@@ -60,12 +60,12 @@ export default function AboutLaurie() {
         </GlassPanel>
 
         <GlassPanel elevation="raised" glow className="p-6 sm:p-8">
-          <div className="flex gap-1 text-gold">{'★★★★★'.split('').map((s, i) => <span key={i}>{s}</span>)}</div>
+          <div className="flex gap-1 text-paper">{'★★★★★'.split('').map((s, i) => <span key={i}>{s}</span>)}</div>
           <blockquote className="mt-3 text-base italic leading-relaxed text-white/80">
             &ldquo;{BRAND.testimonial.quote}&rdquo;
           </blockquote>
           <div className="mt-4 flex items-center gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-gold/20 text-sm font-bold text-gold">
+            <div className="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-sm font-bold text-paper">
               {BRAND.testimonial.author[0]}
             </div>
             <div>

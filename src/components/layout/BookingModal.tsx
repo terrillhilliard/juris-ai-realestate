@@ -53,7 +53,7 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
             <GlassPanel elevation="floating" glow className="p-6 sm:p-8">
               {submitted ? (
                 <div className="py-6 text-center">
-                  <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-positive/15 text-2xl">
+                  <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-white/15 text-2xl">
                     ✓
                   </div>
                   <h3 className="font-display text-xl font-semibold text-white">
@@ -80,18 +80,18 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
                     <input
                       required
                       placeholder="Full name"
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-kwred/60"
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-white/40"
                     />
                     <input
                       required
                       type="tel"
                       placeholder="Phone number"
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-kwred/60"
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-white/40"
                     />
                     <select
                       defaultValue={service ?? ''}
                       required
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-kwred/60 [&>option]:bg-[#141016]"
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-white/40 [&>option]:bg-[#141414]"
                     >
                       <option value="" disabled>
                         I&apos;m looking to…
@@ -102,7 +102,7 @@ export function BookingModal({ open, onClose, service }: BookingModalProps) {
                     </select>
                     <select
                       defaultValue=""
-                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-kwred/60 [&>option]:bg-[#141016]"
+                      className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-white/40 [&>option]:bg-[#141414]"
                     >
                       <option value="" disabled>
                         Preferred area (optional)

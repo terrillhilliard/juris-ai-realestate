@@ -44,9 +44,9 @@ function Slider({
                    [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-white
                    [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5
                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full
-                   [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_12px_2px_rgba(206,1,31,0.7)]"
+                   [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_12px_2px_rgba(255,255,255,0.6)]"
         style={{
-          background: `linear-gradient(90deg,#CE011F ${pct}%,rgba(255,255,255,0.12) ${pct}%)`,
+          background: `linear-gradient(90deg,#FAFAFA ${pct}%,rgba(255,255,255,0.12) ${pct}%)`,
         }}
       />
     </div>
@@ -105,7 +105,7 @@ export default function MortgageCalculator() {
                   onClick={() => setTerm(t)}
                   className={`rounded-xl border py-2.5 text-sm font-semibold transition ${
                     term === t
-                      ? 'border-kwred/60 bg-kwred/[0.15] text-white'
+                      ? 'border-white/60 bg-white/[0.14] text-paper'
                       : 'border-white/10 bg-white/[0.04] text-white/60 hover:bg-white/[0.08]'
                   }`}
                 >
@@ -119,14 +119,14 @@ export default function MortgageCalculator() {
 
       <GlassPanel elevation="floating" glow className="flex flex-col justify-between p-6 sm:p-8">
         <div>
-          <span className="text-sm uppercase tracking-widest text-gold">
+          <span className="text-sm uppercase tracking-widest text-white/50">
             Estimated monthly payment
           </span>
           <motion.div
             key={Math.round(m.monthlyTotal)}
             initial={{ opacity: 0.4, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-2 bg-gradient-to-br from-white to-gold bg-clip-text font-mono text-5xl font-bold text-transparent sm:text-6xl"
+            className="mt-2 bg-gradient-to-br from-white to-white/60 bg-clip-text font-mono text-5xl font-bold text-transparent sm:text-6xl"
           >
             {usd(m.monthlyTotal)}
           </motion.div>
@@ -144,9 +144,9 @@ export default function MortgageCalculator() {
               <span className="font-mono font-semibold text-white">{usd(val as number)}</span>
             </div>
           ))}
-          <div className="flex justify-between rounded-lg border border-gold/25 bg-gold/[0.06] px-4 py-2.5 text-sm">
+          <div className="flex justify-between rounded-lg border border-white/25 bg-white/[0.07] px-4 py-2.5 text-sm">
             <span className="text-white/70">Loan amount</span>
-            <span className="font-mono font-semibold text-gold">{usd(m.loanAmount)}</span>
+            <span className="font-mono font-semibold text-paper">{usd(m.loanAmount)}</span>
           </div>
         </div>
 

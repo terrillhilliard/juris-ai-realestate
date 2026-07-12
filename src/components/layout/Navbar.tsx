@@ -5,41 +5,30 @@ import { useState } from 'react';
 import { BookingModal } from './BookingModal';
 import { BRAND } from '@/lib/brand';
 
-const LINKS = [
-  { href: '#services', label: 'Buy · Sell · Invest' },
-  { href: '#markets', label: 'Neighborhoods' },
-  { href: '#mortgage', label: 'Mortgage Calculator' },
-  { href: '#about', label: 'About Laurie' },
-];
-
+/**
+ * Minimalist floating top bar — no menu. The center-screen assistant is the
+ * navigation; this bar carries only identity and one action.
+ */
 export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-void/70 backdrop-blur-xl">
-        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-          <a href="#top" className="flex items-center">
-            <img src={BRAND.assets.logoWhite} alt={BRAND.agent} className="h-8 w-auto sm:h-9" />
+      <header className="fixed inset-x-0 top-4 z-50 px-4">
+        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between rounded-full border border-white/12 bg-ink/70 px-5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.9)] backdrop-blur-2xl sm:px-6">
+          <a href="#top" className="flex items-center gap-3">
+            <img src={BRAND.assets.logoWhite} alt={BRAND.agent} className="h-7 w-auto" />
           </a>
-          <div className="hidden items-center gap-6 md:flex">
-            {LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-sm text-white/60 transition hover:text-white"
-              >
-                {l.label}
-              </a>
-            ))}
+          <div className="hidden items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/40 sm:flex">
+            {BRAND.tagline}
           </div>
           <button
             onClick={() => setOpen(true)}
-            className="rounded-lg bg-gradient-to-r from-kwred to-kwdark px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+            className="rounded-full bg-paper px-4 py-2 text-xs font-semibold text-ink transition hover:bg-white"
           >
             Work with Laurie
           </button>
-        </nav>
+        </div>
       </header>
       <BookingModal open={open} onClose={() => setOpen(false)} />
     </>

@@ -4,90 +4,103 @@ import { useState } from 'react';
 /* eslint-disable @next/next/no-img-element */
 import { motion } from 'framer-motion';
 import Hero3D from '@/components/hero/Hero3D';
-import ServicesCards from '@/components/home/ServicesCards';
+import ChatHero from '@/components/ai/ChatHero';
+import ChatFAB from '@/components/ai/ChatFAB';
+import ServicesRows from '@/components/home/ServicesRows';
 import MortgageCalculator from '@/components/home/MortgageCalculator';
 import AboutLaurie from '@/components/about/AboutLaurie';
-import FloatingAI from '@/components/ai/FloatingAI';
 import { Navbar } from '@/components/layout/Navbar';
 import { Section } from '@/components/layout/Section';
 import { BookingModal } from '@/components/layout/BookingModal';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { BRAND } from '@/lib/brand';
 
-export default function Home() {
-  const [consult, setConsult] = useState<{ open: boolean; service?: string }>({ open: false });
+const STATS = [
+  { k: '25+', v: 'years living & selling the East Bay' },
+  { k: '6', v: 'cities, one trusted neighbor' },
+  { k: '24/7', v: 'every call & text answered by AI' },
+  { k: '<1s', v: 'time to a live answer, day or night' },
+] as const;
 
-  const openConsult = (service?: string) => setConsult({ open: true, service });
+export default function Home() {
+  const [consult, setConsult] = useState(false);
 
   return (
     <main id="top">
       <Navbar />
 
-      {/* Hero */}
-      <section className="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-32 sm:px-8 sm:pt-40">
+      {/* Hero — the conversation IS the interface */}
+      <section className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-4 pb-16 pt-28 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="text-center"
         >
-          <span className="mb-5 inline-block rounded-full border border-gold/30 bg-gold/[0.07] px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-gold">
-            {BRAND.tagline}
-          </span>
-          <h1 className="mx-auto max-w-4xl font-display text-4xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Your East Bay Home,{' '}
-            <span className="bg-gradient-to-r from-kwrose via-kwred to-gold bg-clip-text text-transparent">
-              Found.
-            </span>
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-white/55 sm:text-lg">
-            {BRAND.yearsInEastBay} years living and working in the {BRAND.region}. Buy, sell, or
-            invest with an agent whose promise is simple: your interests supersede her own.
+          <p className="text-xs uppercase tracking-[0.3em] text-white/40">
+            {BRAND.agent} · {BRAND.brokerage}
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <CTAButton onClick={() => openConsult('buy')}>🏠 Find my home</CTAButton>
-            <CTAButton variant="secondary" onClick={() => openConsult('sell')}>
-              What&apos;s my home worth?
-            </CTAButton>
-          </div>
-          <p className="mt-5 text-sm text-white/40">
-            Or just call or text — <span className="text-kwrose">{BRAND.assistant}</span>,
-            Laurie&apos;s AI assistant, answers instantly, 24/7 ↘
+          <h1 className="mx-auto mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-6xl">
+            East Bay real estate,
+            <br />
+            one conversation away.
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-base text-white/55">
+            Don&apos;t browse. Just ask. {BRAND.assistant} answers, qualifies, books — and takes
+            you anywhere on this page.
           </p>
         </motion.div>
 
         <motion.div
-          id="markets"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease: 'easeOut' }}
-          className="mt-14 scroll-mt-24"
+          transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+          className="mt-10"
         >
-          <Hero3D />
-          <p className="mt-3 text-center text-xs text-white/35">
-            Laurie&apos;s East Bay — hover a building to explore each market (illustrative data)
-          </p>
+          <ChatHero />
         </motion.div>
       </section>
 
-      {/* Services */}
+      {/* Stats — text-heavy, high contrast */}
+      <section className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-4">
+          {STATS.map((s) => (
+            <div key={s.k} className="bg-ink p-7 sm:p-9">
+              <div className="font-mono text-4xl font-bold text-paper sm:text-5xl">{s.k}</div>
+              <div className="mt-2 text-sm leading-snug text-white/50">{s.v}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Services — editorial rows */}
       <Section
         id="services"
-        eyebrow="How can Laurie help?"
-        title="Buy. Sell. Invest. All of it, done right."
-        subtitle="Full-time realtor, full-service representation — from first showings to final signatures."
+        eyebrow="Services"
+        title="Buy. Sell. Invest."
+        subtitle="Full-time representation, from first showing to final signature. Every path starts with a conversation."
       >
-        <ServicesCards onCTA={(s) => openConsult(s)} />
+        <ServicesRows />
       </Section>
 
       {/* Mortgage calculator */}
       <Section
         id="mortgage"
-        eyebrow="Plan Your Purchase"
+        eyebrow="Plan the numbers"
         title="What would your monthly payment look like?"
-        subtitle="Slide to explore. When you're ready for real numbers, Laurie connects you with trusted local lenders."
+        subtitle="Slide to explore. When you want real quotes, Laurie connects you with trusted local lenders."
       >
         <MortgageCalculator />
+      </Section>
+
+      {/* Markets — 3D interlude */}
+      <Section
+        id="markets"
+        eyebrow="Neighborhoods"
+        title="Six cities. One neighbor."
+        subtitle="Pleasant Hill · Walnut Creek · Concord · Clayton · Martinez · Lafayette — hover a building for the numbers (illustrative)."
+      >
+        <Hero3D />
       </Section>
 
       {/* About + testimonial */}
@@ -100,24 +113,36 @@ export default function Home() {
         <AboutLaurie />
       </Section>
 
-      {/* Contact / final CTA */}
+      {/* Contact */}
       <section id="contact" className="mx-auto w-full max-w-6xl px-5 pb-28 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-kwred/[0.14] via-kwdark/[0.08] to-gold/[0.1] p-10 text-center backdrop-blur-xl sm:p-16"
+          className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/[0.04] p-10 text-center backdrop-blur-xl sm:p-16"
         >
-          <h2 className="mx-auto max-w-2xl font-display text-3xl font-semibold text-white sm:text-4xl">
-            Ready when you are — day or night.
+          <h2 className="mx-auto max-w-3xl font-display text-3xl font-semibold leading-tight text-paper sm:text-5xl">
+            Ready when you are.
+            <br />
+            Day or night.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-white/55">
-            Call or text {BRAND.phoneDisplay} anytime. {BRAND.assistant} answers instantly,
-            qualifies your needs, and gets you on Laurie&apos;s calendar — no voicemail, ever.
+          <p className="mx-auto mt-5 max-w-xl text-white/55">
+            Call or text {BRAND.phoneDisplay} anytime — {BRAND.assistant} answers instantly,
+            qualifies your needs, and gets you on Laurie&apos;s calendar. No voicemail. Ever.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <CTAButton onClick={() => openConsult()}>Request a consult</CTAButton>
+            <CTAButton onClick={() => setConsult(true)}>Request a consult</CTAButton>
+            <CTAButton
+              variant="secondary"
+              onClick={() =>
+                window.dispatchEvent(
+                  new CustomEvent('ellie:ask', { detail: 'I have a question' }),
+                )
+              }
+            >
+              Ask {BRAND.assistant} instead
+            </CTAButton>
           </div>
           <div className="mx-auto mt-10 flex max-w-xl flex-col items-center gap-1.5 text-sm text-white/45">
             <span className="font-semibold text-white/70">
@@ -128,7 +153,7 @@ export default function Home() {
             <img
               src={BRAND.assets.kwLogo}
               alt={BRAND.brokerage}
-              className="mt-3 h-8 w-auto opacity-80"
+              className="mt-3 h-8 w-auto opacity-70 grayscale"
             />
           </div>
         </motion.div>
@@ -151,16 +176,12 @@ export default function Home() {
             The AI assistant qualifies inquiries and books appointments only — it does not provide
             legal or financial advice. Not affiliated with or endorsed by Keller Williams Realty.
           </span>
-          <span>Each office independently owned and operated. 🏠 Equal Housing Opportunity.</span>
+          <span>Each office independently owned and operated. Equal Housing Opportunity.</span>
         </footer>
       </section>
 
-      <FloatingAI />
-      <BookingModal
-        open={consult.open}
-        service={consult.service}
-        onClose={() => setConsult({ open: false })}
-      />
+      <ChatFAB />
+      <BookingModal open={consult} onClose={() => setConsult(false)} />
     </main>
   );
 }

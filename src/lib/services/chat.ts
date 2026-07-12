@@ -40,6 +40,77 @@ export const OPENER = {
 
 const CITIES = BRAND.markets;
 
+/**
+ * Conversational navigation — the chatbot is the site's primary nav.
+ * If a message matches a destination, the UI scrolls there and Ellie narrates.
+ */
+export interface NavTarget {
+  sectionId: string;
+  reply: string;
+}
+
+const NAV_RULES: { match: RegExp; target: NavTarget }[] = [
+  {
+    match: /service|what.*(do|offer)|help me with|sell.*house.*how|how.*work/i,
+    target: {
+      sectionId: 'services',
+      reply:
+        "Here's everything Laurie does — buying, selling, and investing. Tap any one and I'll get you started.",
+    },
+  },
+  {
+    match: /payment|calculator|mortgage|afford|monthly|rate|loan/i,
+    target: {
+      sectionId: 'mortgage',
+      reply:
+        'Pulling up the payment calculator. Slide the numbers around — when you want real quotes, I can connect you with Laurie’s lenders.',
+    },
+  },
+  {
+    match: /neighborhood|market|cities|skyline|area|where/i,
+    target: {
+      sectionId: 'markets',
+      reply:
+        'These are Laurie’s six East Bay markets — hover any building for the numbers. Want me to qualify you for one of them?',
+    },
+  },
+  {
+    match: /about|who is laurie|experience|background|bio/i,
+    target: {
+      sectionId: 'about',
+      reply:
+        'Meet Laurie — 25+ years in the East Bay, and a neighbor before she’s a realtor.',
+    },
+  },
+  {
+    match: /review|testimonial|reference|past client/i,
+    target: {
+      sectionId: 'about',
+      reply: 'Here’s what clients say. Nicole’s review is a good place to start.',
+    },
+  },
+  {
+    match: /contact|reach|office|address|phone number|email/i,
+    target: {
+      sectionId: 'contact',
+      reply: `Here are all the ways to reach us. Or honestly — just keep talking to me, I can book you with Laurie right here.`,
+    },
+  },
+];
+
+export function detectNav(msg: string): NavTarget | undefined {
+  return NAV_RULES.find((r) => r.match.test(msg))?.target;
+}
+
+/** Persistent nav chips shown under the chat input. */
+export const NAV_CHIPS = [
+  { label: 'Services', prompt: 'Show me your services' },
+  { label: 'Payment calculator', prompt: "What's my monthly payment?" },
+  { label: 'Neighborhoods', prompt: 'Show me the neighborhoods' },
+  { label: 'About Laurie', prompt: 'Who is Laurie?' },
+  { label: 'Reviews', prompt: 'Show me reviews' },
+] as const;
+
 function detectIntent(msg: string): ChatState['intent'] | undefined {
   if (/buy|purchase|looking for|first.?time|home for/i.test(msg)) return 'buy';
   if (/sell|list|valuation|worth|market my/i.test(msg)) return 'sell';

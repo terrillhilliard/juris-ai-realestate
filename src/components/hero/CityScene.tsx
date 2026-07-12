@@ -61,7 +61,7 @@ function CityBuilding({
       >
         <boxGeometry args={[0.9, h, 0.9]} />
         <meshStandardMaterial
-          color="#16121a"
+          color="#141414"
           emissive={new THREE.Color(city.color)}
           emissiveIntensity={0.32}
           metalness={0.6}
@@ -73,11 +73,11 @@ function CityBuilding({
 
       {hovered && (
         <Html center position={[0, h + 0.9, 0]} distanceFactor={10} zIndexRange={[40, 0]}>
-          <div className="w-56 rounded-xl border border-white/15 bg-[#141016]/90 p-3 text-xs text-white shadow-xl backdrop-blur-xl">
+          <div className="w-56 rounded-xl border border-white/15 bg-[#141414]/90 p-3 text-xs text-white shadow-xl backdrop-blur-xl">
             <div className="mb-1 font-semibold" style={{ color: city.color }}>
               📍 {city.name}
             </div>
-            <Row label="Median price" value={fmtPrice(city.medianPrice)} accent="#C8A26A" />
+            <Row label="Median price" value={fmtPrice(city.medianPrice)} accent="#FAFAFA" />
             <Row label="Days on market" value={`~${city.daysOnMarket}`} />
             <div className="mt-1.5 border-t border-white/10 pt-1.5 text-white/55">{city.vibe}</div>
             <div className="mt-1 text-[10px] text-white/35">
@@ -131,7 +131,7 @@ function InquiryWave() {
       {seeds.map((_, i) => (
         <mesh key={i}>
           <sphereGeometry args={[1, 8, 8]} />
-          <meshBasicMaterial color="#FF5A6E" toneMapped={false} />
+          <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </mesh>
       ))}
     </group>
@@ -150,9 +150,9 @@ function AIPresence() {
       <mesh ref={ref} position={[0, 1.7, 0]}>
         <icosahedronGeometry args={[0.75, 1]} />
         <meshStandardMaterial
-          color="#FF3B52"
-          emissive="#CE011F"
-          emissiveIntensity={1.5}
+          color="#FFFFFF"
+          emissive="#FFFFFF"
+          emissiveIntensity={1.1}
           metalness={0.9}
           roughness={0.15}
           wireframe
@@ -180,11 +180,11 @@ export default function CityScene() {
       camera={{ position: [0, 4, 9.5], fov: 45 }}
       gl={{ antialias: true, alpha: true }}
     >
-      <color attach="background" args={['#0B0A0C']} />
-      <fog attach="fog" args={['#0B0A0C', 10, 23]} />
+      <color attach="background" args={['#0A0A0A']} />
+      <fog attach="fog" args={['#0A0A0A', 10, 23]} />
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 8, 5]} intensity={1.4} castShadow />
-      <pointLight position={[0, 3, 0]} intensity={2.2} color="#CE011F" distance={8} />
+      <pointLight position={[0, 3, 0]} intensity={2.2} color="#FFFFFF" distance={8} />
 
       <Rig />
       <AIPresence />

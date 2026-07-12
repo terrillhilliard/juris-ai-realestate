@@ -93,7 +93,7 @@ export default function VoicePanel() {
     <div className="flex h-full flex-col">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-kwred to-kwdark text-sm font-bold text-white">
+          <div className="grid h-9 w-9 place-items-center rounded-full bg-paper text-sm font-bold text-ink">
             {BRAND.assistant[0]}
           </div>
           <div>
@@ -102,8 +102,8 @@ export default function VoicePanel() {
           </div>
         </div>
         {state === 'in_call' && (
-          <span className="flex items-center gap-1.5 font-mono text-xs text-positive">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-positive" /> {mmss}
+          <span className="flex items-center gap-1.5 font-mono text-xs text-white/70">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-paper" /> {mmss}
           </span>
         )}
       </div>
@@ -114,10 +114,10 @@ export default function VoicePanel() {
             <motion.button
               onClick={() => call(true)}
               whileTap={{ scale: 0.94 }}
-              className="relative mx-auto grid h-20 w-20 place-items-center rounded-full bg-gradient-to-br from-kwred to-kwdark shadow-[0_0_40px_-8px_rgba(206,1,31,0.8)]"
+              className="relative mx-auto grid h-20 w-20 place-items-center rounded-full bg-paper shadow-[0_0_44px_-10px_rgba(255,255,255,0.6)]"
             >
-              <span className="absolute inset-0 animate-ping rounded-full bg-kwred/30" />
-              <PhoneIcon className="h-8 w-8 text-white" />
+              <span className="absolute inset-0 animate-ping rounded-full bg-white/25" />
+              <PhoneIcon className="h-8 w-8 text-ink" />
             </motion.button>
             <p className="mt-4 text-sm text-white/70">Tap to call {BRAND.assistant}</p>
             <p className="mt-1 text-xs text-white/40">
@@ -136,7 +136,7 @@ export default function VoicePanel() {
       {state === 'dialing' && (
         <div className="grid flex-1 place-items-center py-6">
           <div className="text-center">
-            <div className="mx-auto mb-3 h-14 w-14 animate-pulse rounded-full bg-gradient-to-br from-kwred to-kwdark opacity-90" />
+            <div className="mx-auto mb-3 h-14 w-14 animate-pulse rounded-full bg-white/20 opacity-90" />
             <p className="text-sm text-white/70">Ringing…</p>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function VoicePanel() {
       {(state === 'in_call' || state === 'ended') && (
         <>
           {answerMs !== null && (
-            <div className="mb-2 flex items-center gap-2 rounded-lg border border-positive/25 bg-positive/[0.07] px-3 py-1.5 text-[11px] text-positive">
+            <div className="mb-2 flex items-center gap-2 rounded-lg border border-white/25 bg-white/[0.08] px-3 py-1.5 text-[11px] text-white/85">
               ⚡ Answered in {(answerMs / 1000).toFixed(1)}s — no voicemail, no hold
             </div>
           )}
@@ -158,7 +158,7 @@ export default function VoicePanel() {
                   animate={{ opacity: 1, y: 0 }}
                   className={`max-w-[90%] rounded-xl px-3 py-2 text-[13px] leading-relaxed ${
                     t.role === 'ai'
-                      ? 'bg-gradient-to-br from-kwred/25 to-kwdark/25 text-white'
+                      ? 'border border-white/10 bg-white/[0.07] text-paper'
                       : 'ml-auto bg-white/[0.07] text-white/80'
                   }`}
                 >
@@ -174,7 +174,7 @@ export default function VoicePanel() {
                 {[0, 1, 2, 3, 4].map((b) => (
                   <span
                     key={b}
-                    className="w-1 animate-pulse rounded-full bg-kwrose"
+                    className="w-1 animate-pulse rounded-full bg-paper"
                     style={{ height: `${7 + (b % 3) * 5}px`, animationDelay: `${b * 0.12}s` }}
                   />
                 ))}
@@ -184,7 +184,7 @@ export default function VoicePanel() {
           </div>
           <button
             onClick={hangUp}
-            className="mt-3 w-full rounded-xl bg-danger/90 py-2.5 text-sm font-semibold text-white transition hover:bg-danger"
+            className="mt-3 w-full rounded-xl border border-white/25 bg-white/[0.06] py-2.5 text-sm font-semibold text-paper transition hover:bg-white/[0.14]"
           >
             {state === 'ended' ? 'Call ended — reset' : 'End call'}
           </button>

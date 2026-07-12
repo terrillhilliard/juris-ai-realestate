@@ -16,7 +16,7 @@ export const CITY_MARKETS: CityMarket[] = [
     medianPrice: 1_900_000,
     daysOnMarket: 12,
     vibe: 'Top schools · wooded hills',
-    color: '#C8A26A',
+    color: '#FFFFFF',
     height: 1.9,
   },
   {
@@ -25,7 +25,7 @@ export const CITY_MARKETS: CityMarket[] = [
     medianPrice: 1_250_000,
     daysOnMarket: 14,
     vibe: 'Downtown living · BART access',
-    color: '#FF5A6E',
+    color: '#E4E4E7',
     height: 1.5,
   },
   {
@@ -34,7 +34,7 @@ export const CITY_MARKETS: CityMarket[] = [
     medianPrice: 1_100_000,
     daysOnMarket: 18,
     vibe: 'Small-town charm · Mt. Diablo views',
-    color: '#E8E6EA',
+    color: '#D4D4D8',
     height: 1.35,
   },
   {
@@ -43,7 +43,7 @@ export const CITY_MARKETS: CityMarket[] = [
     medianPrice: 975_000,
     daysOnMarket: 13,
     vibe: 'Family neighborhoods · parks',
-    color: '#4ade80',
+    color: '#F4F4F5',
     height: 1.2,
   },
   {
@@ -52,7 +52,7 @@ export const CITY_MARKETS: CityMarket[] = [
     medianPrice: 850_000,
     daysOnMarket: 16,
     vibe: 'Historic waterfront · value',
-    color: '#FF5A6E',
+    color: '#A1A1AA',
     height: 1.05,
   },
   {
@@ -61,7 +61,7 @@ export const CITY_MARKETS: CityMarket[] = [
     medianPrice: 780_000,
     daysOnMarket: 15,
     vibe: 'First-time buyer friendly',
-    color: '#C8A26A',
+    color: '#E4E4E7',
     height: 0.95,
   },
 ];

@@ -16,7 +16,7 @@ body {
 .bg-ambient {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
   background:
     radial-gradient(720px 480px at 50% -5%, rgba(255, 255, 255, 0.06), transparent 60%),

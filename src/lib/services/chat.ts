@@ -13,6 +13,9 @@ export type ChatStage =
   | 'budget'
   | 'timeline'
   | 'slot'
+  | 'name'
+  | 'phone'
+  | 'email'
   | 'booked'
   | 'open';
 
@@ -23,6 +26,7 @@ export interface ChatState {
   budget?: string;
   timeline?: string;
   slot?: string;
+  contact?: { name?: string; phone?: string; email?: string };
 }
 
 export interface ChatTurnResult {
@@ -245,12 +249,68 @@ export function nextTurn(state: ChatState, userMessage: string): ChatTurnResult 
     case 'slot': {
       const slot = SLOTS.find((s) => msg.toLowerCase().includes(s.split(' ')[0].toLowerCase())) ?? SLOTS[1];
       return {
-        state: { ...state, stage: 'booked', slot },
-        reply: `Booked! ${slot} with Laurie Wotus. I've sent a confirmation text with the details and let Laurie know — she'll come prepared for your ${
+        state: { ...state, stage: 'name', slot },
+        reply: `${slot} it is. Let me get a few details so Laurie can confirm — what's your name?`,
+        quickReplies: [],
+        typingMs: 1000,
+      };
+    }
+
+    // Contact capture: name → phone → email, then confirm the booking.
+    case 'name': {
+      if (msg.length < 2) {
+        return {
+          state,
+          reply: 'Sorry, I didn’t catch that — what name should I put on the appointment?',
+          quickReplies: [],
+          typingMs: 800,
+        };
+      }
+      const name = msg.replace(/^(i'?m|my name is|it'?s|this is)\s+/i, '').trim();
+      const first = name.split(/\s+/)[0];
+      return {
+        state: { ...state, stage: 'phone', contact: { ...state.contact, name } },
+        reply: `Thanks, ${first}. What's the best phone number to text your confirmation to?`,
+        quickReplies: [],
+        typingMs: 900,
+      };
+    }
+
+    case 'phone': {
+      const digits = msg.replace(/\D/g, '');
+      if (digits.length < 7) {
+        return {
+          state,
+          reply: 'That number looks incomplete — could you share a full phone number, like (925) 555-0142?',
+          quickReplies: [],
+          typingMs: 800,
+        };
+      }
+      return {
+        state: { ...state, stage: 'email', contact: { ...state.contact, phone: msg.trim() } },
+        reply: 'Got it. And your email address for the calendar invite?',
+        quickReplies: [],
+        typingMs: 900,
+      };
+    }
+
+    case 'email': {
+      if (!/^\S+@\S+\.\S+$/.test(msg)) {
+        return {
+          state,
+          reply: 'Hmm, that email doesn’t look right — could you double-check it? (e.g. name@example.com)',
+          quickReplies: [],
+          typingMs: 800,
+        };
+      }
+      const c = { ...state.contact, email: msg.trim() };
+      return {
+        state: { ...state, stage: 'booked', contact: c },
+        reply: `You're booked, ${c.name?.split(/\s+/)[0] ?? 'thanks'}! ${state.slot} with Laurie Wotus for your ${
           state.intent === 'sell' ? 'pricing and staging consult' : state.intent === 'invest' ? 'investment review' : 'tour'
-        }. Anything else I can help with?`,
+        }. Calendar invite is on its way to ${c.email}, and you'll get a confirmation text at ${c.phone}. Anything else I can help with?`,
         quickReplies: ['Start over', 'No, thanks!'],
-        typingMs: 1200,
+        typingMs: 1300,
       };
     }
 

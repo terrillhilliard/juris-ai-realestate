@@ -25,6 +25,14 @@ function SmsIcon({ className }: { className?: string }) {
   );
 }
 
+function CalendarIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V10h14v10ZM5 8V6h14v2H5Zm4 6H7v-2h2v2Zm4 0h-2v-2h2v2Zm4 0h-2v-2h2v2Zm-8 4H7v-2h2v2Zm4 0h-2v-2h2v2Z" />
+    </svg>
+  );
+}
+
 const STATS = [
   { k: '25+', v: 'years living & selling the East Bay' },
   { k: '6', v: 'cities, one trusted neighbor' },
@@ -104,6 +112,21 @@ export default function Home() {
                 <SmsIcon className="h-6 w-6" />
               </button>
               <span className="text-xs font-medium text-ink/60">Chat with Ellie</span>
+            </div>
+
+            {/* Calendly — book directly with Laurie */}
+            <div className="flex flex-col items-center gap-2">
+              <a
+                href={BRAND.calendlyUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Schedule a consultation directly with Laurie"
+                title="Schedule a consultation with Laurie"
+                className="grid h-16 w-16 place-items-center rounded-full border border-ink/20 bg-white/70 text-ink backdrop-blur-md transition hover:border-royal/50 hover:text-royal active:scale-95"
+              >
+                <CalendarIcon className="h-6 w-6" />
+              </a>
+              <span className="text-xs font-medium text-ink/60">Schedule with Laurie</span>
             </div>
           </div>
         </motion.div>

@@ -9,6 +9,7 @@ export const BRAND = {
   brokerage: 'Keller Williams Realty East Bay',
   office: '201 N Civic Drive, Suite 130, Walnut Creek, CA 94596',
   phoneDisplay: '(925) 555-0142', // mock — demo only
+  calendlyUrl: 'https://calendly.com/terrillhilliard/30min',
   assistant: 'Ellie',
   assistantTagline: "Laurie's AI Assistant",
   tagline: 'integrity · honesty · community',

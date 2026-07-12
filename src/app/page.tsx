@@ -17,6 +17,14 @@ import { CTAButton } from '@/components/ui/CTAButton';
 import { BRAND } from '@/lib/brand';
 import { openVoiceAgent } from '@/lib/voiceWidget';
 
+function SmsIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM8 11H6V9h2v2Zm5 0h-2V9h2v2Zm5 0h-2V9h2v2Z" />
+    </svg>
+  );
+}
+
 const STATS = [
   { k: '25+', v: 'years living & selling the East Bay' },
   { k: '6', v: 'cities, one trusted neighbor' },
@@ -58,37 +66,77 @@ export default function Home() {
           <h1 className="mx-auto mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-6xl">
             East Bay real estate,
             <br />
-            one{' '}
-            <span className="bg-gradient-to-r from-flame via-royal to-flame bg-clip-text text-transparent">
-              conversation
-            </span>{' '}
-            away.
+            one conversation away.
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-base text-white/55">
             Don&apos;t browse. Just ask. {BRAND.assistant} answers, qualifies, books — and takes
             you anywhere on this page.
           </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-            <CTAButton onClick={() => openVoiceAgent()} className="flex items-center gap-2.5">
-              <PhoneIcon className="h-4 w-4" />
-              Speak with the AI — live
-            </CTAButton>
-            <CTAButton
-              variant="secondary"
-              onClick={() =>
-                window.dispatchEvent(new CustomEvent('ellie:ask', { detail: '' }))
-              }
-            >
-              💬 Text instead
-            </CTAButton>
+          <div className="mt-8 flex items-center justify-center gap-5">
+            {/* Live call — animated dial icon */}
+            <div className="flex flex-col items-center gap-2">
+              <button
+                onClick={() => openVoiceAgent()}
+                aria-label="Call and speak with the AI voice agent"
+                title="Speak with the AI — live"
+                className="relative grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-flame to-royal text-paper shadow-[0_10px_36px_-8px_rgba(232,50,63,0.75)] transition hover:brightness-110 active:scale-95"
+              >
+                <span className="call-pulse absolute inset-0 rounded-full border border-flame/60" />
+                <span
+                  className="call-pulse absolute inset-0 rounded-full border border-flame/40"
+                  style={{ animationDelay: '0.9s' }}
+                />
+                <PhoneIcon className="animate-ring h-6 w-6" />
+              </button>
+              <span className="text-xs font-medium text-white/60">Call the AI</span>
+            </div>
+
+            {/* Text — SMS icon */}
+            <div className="flex flex-col items-center gap-2">
+              <button
+                onClick={() =>
+                  window.dispatchEvent(new CustomEvent('ellie:ask', { detail: '' }))
+                }
+                aria-label="Text the AI assistant instead"
+                title="Text instead"
+                className="grid h-16 w-16 place-items-center rounded-full border border-white/20 bg-white/[0.05] text-paper backdrop-blur-md transition hover:border-white/40 hover:bg-white/[0.1] active:scale-95"
+              >
+                <SmsIcon className="h-6 w-6" />
+              </button>
+              <span className="text-xs font-medium text-white/60">Text instead</span>
+            </div>
           </div>
+        </motion.div>
+
+        {/* Laurie — the human behind the assistant */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
+          className="mt-12 flex flex-col items-center"
+        >
+          <div className="relative">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-flame/40 to-transparent blur-md" />
+            <img
+              src={BRAND.assets.headshot}
+              alt={`${BRAND.agent}, ${BRAND.brokerage}`}
+              className="relative h-24 w-24 rounded-full border border-white/20 object-cover object-top shadow-2xl sm:h-28 sm:w-28"
+            />
+            <span className="absolute bottom-1 right-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-ink bg-flame">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-paper" />
+            </span>
+          </div>
+          <p className="mt-3 text-sm font-semibold text-paper">{BRAND.agent}</p>
+          <p className="text-xs text-white/45">
+            {BRAND.title} · answered 24/7 by {BRAND.assistant}, her AI assistant
+          </p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-          className="mt-10"
+          transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
+          className="mt-8"
         >
           <ChatHero />
         </motion.div>

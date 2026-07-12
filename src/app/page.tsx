@@ -4,8 +4,9 @@ import { useState } from 'react';
 /* eslint-disable @next/next/no-img-element */
 import { motion } from 'framer-motion';
 import Hero3D from '@/components/hero/Hero3D';
-import ChatHero from '@/components/ai/ChatHero';
+import ChatHero, { PhoneIcon } from '@/components/ai/ChatHero';
 import ChatFAB from '@/components/ai/ChatFAB';
+import ElevenLabsWidget from '@/components/ai/ElevenLabsWidget';
 import ServicesRows from '@/components/home/ServicesRows';
 import MortgageCalculator from '@/components/home/MortgageCalculator';
 import AboutLaurie from '@/components/about/AboutLaurie';
@@ -14,6 +15,7 @@ import { Section } from '@/components/layout/Section';
 import { BookingModal } from '@/components/layout/BookingModal';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { BRAND } from '@/lib/brand';
+import { openVoiceAgent } from '@/lib/voiceWidget';
 
 const STATS = [
   { k: '25+', v: 'years living & selling the East Bay' },
@@ -31,6 +33,19 @@ export default function Home() {
 
       {/* Hero — the conversation IS the interface */}
       <section className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-4 pb-16 pt-28 sm:px-8">
+        {/* Spatial orbs */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="orb left-[6%] top-[16%] h-56 w-56 bg-royal/25" />
+          <div
+            className="orb right-[8%] top-[42%] h-72 w-72 bg-white/[0.06]"
+            style={{ animationDelay: '-4s' }}
+          />
+          <div
+            className="orb bottom-[6%] left-[30%] h-48 w-48 bg-royal/15"
+            style={{ animationDelay: '-7s' }}
+          />
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -43,12 +58,30 @@ export default function Home() {
           <h1 className="mx-auto mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-6xl">
             East Bay real estate,
             <br />
-            one conversation away.
+            one{' '}
+            <span className="bg-gradient-to-r from-flame via-royal to-flame bg-clip-text text-transparent">
+              conversation
+            </span>{' '}
+            away.
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-base text-white/55">
             Don&apos;t browse. Just ask. {BRAND.assistant} answers, qualifies, books — and takes
             you anywhere on this page.
           </p>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+            <CTAButton onClick={() => openVoiceAgent()} className="flex items-center gap-2.5">
+              <PhoneIcon className="h-4 w-4" />
+              Speak with the AI — live
+            </CTAButton>
+            <CTAButton
+              variant="secondary"
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent('ellie:ask', { detail: '' }))
+              }
+            >
+              💬 Text instead
+            </CTAButton>
+          </div>
         </motion.div>
 
         <motion.div
@@ -65,8 +98,10 @@ export default function Home() {
       <section className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-4">
           {STATS.map((s) => (
-            <div key={s.k} className="bg-ink p-7 sm:p-9">
-              <div className="font-mono text-4xl font-bold text-paper sm:text-5xl">{s.k}</div>
+            <div key={s.k} className="group bg-ink p-7 transition-colors hover:bg-[#120a0b] sm:p-9">
+              <div className="font-mono text-4xl font-bold text-paper transition-colors group-hover:text-flame sm:text-5xl">
+                {s.k}
+              </div>
               <div className="mt-2 text-sm leading-snug text-white/50">{s.v}</div>
             </div>
           ))}
@@ -120,7 +155,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/[0.04] p-10 text-center backdrop-blur-xl sm:p-16"
+          className="edge-light relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-10 text-center backdrop-blur-xl sm:p-16"
         >
           <h2 className="mx-auto max-w-3xl font-display text-3xl font-semibold leading-tight text-paper sm:text-5xl">
             Ready when you are.
@@ -132,16 +167,12 @@ export default function Home() {
             qualifies your needs, and gets you on Laurie&apos;s calendar. No voicemail. Ever.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <CTAButton onClick={() => setConsult(true)}>Request a consult</CTAButton>
-            <CTAButton
-              variant="secondary"
-              onClick={() =>
-                window.dispatchEvent(
-                  new CustomEvent('ellie:ask', { detail: 'I have a question' }),
-                )
-              }
-            >
-              Ask {BRAND.assistant} instead
+            <CTAButton onClick={() => openVoiceAgent()} className="flex items-center gap-2.5">
+              <PhoneIcon className="h-4 w-4" />
+              Speak with the AI
+            </CTAButton>
+            <CTAButton variant="secondary" onClick={() => setConsult(true)}>
+              Request a consult
             </CTAButton>
           </div>
           <div className="mx-auto mt-10 flex max-w-xl flex-col items-center gap-1.5 text-sm text-white/45">
@@ -153,7 +184,7 @@ export default function Home() {
             <img
               src={BRAND.assets.kwLogo}
               alt={BRAND.brokerage}
-              className="mt-3 h-8 w-auto opacity-70 grayscale"
+              className="mt-3 h-8 w-auto opacity-70"
             />
           </div>
         </motion.div>
@@ -181,6 +212,7 @@ export default function Home() {
       </section>
 
       <ChatFAB />
+      <ElevenLabsWidget />
       <BookingModal open={consult} onClose={() => setConsult(false)} />
     </main>
   );

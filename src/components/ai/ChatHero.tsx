@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
 import { GlassPanel } from '@/components/ui/GlassPanel';
-import VoicePanel, { PhoneIcon } from './VoicePanel';
 import { BRAND } from '@/lib/brand';
+import { openVoiceAgent } from '@/lib/voiceWidget';
 import {
   detectNav,
   INITIAL_STATE,
@@ -20,29 +20,49 @@ interface Msg {
   text: string;
 }
 
-function ChatIcon({ className }: { className?: string }) {
+export function PhoneIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z" />
+      <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2Z" />
     </svg>
   );
 }
 
+const hasFinePointer = () =>
+  typeof window !== 'undefined' && window.matchMedia?.('(pointer: fine)').matches;
+
 /**
- * Center-screen conversational interface — the primary way to navigate the
- * page. Ellie answers, qualifies, books, and scrolls the visitor to any
- * section on request. Voice mode lives behind the phone toggle.
+ * Center-screen conversational interface with spatial pointer tilt.
+ * Ellie answers, qualifies, books, and navigates the page; the phone
+ * button starts a LIVE voice session via the ElevenLabs agent.
  */
 export default function ChatHero() {
-  const [mode, setMode] = useState<'chat' | 'voice'>('chat');
   const [messages, setMessages] = useState<Msg[]>([{ role: 'ai', text: OPENER.text }]);
   const [quickReplies, setQuickReplies] = useState<string[]>(OPENER.quickReplies);
   const [chatState, setChatState] = useState<ChatState>(INITIAL_STATE);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
+  const [voiceHint, setVoiceHint] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const busyRef = useRef(false);
+
+  // Spatial tilt — the panel leans toward the pointer.
+  const rx = useMotionValue(0);
+  const ry = useMotionValue(0);
+  const srx = useSpring(rx, { stiffness: 120, damping: 18 });
+  const sry = useSpring(ry, { stiffness: 120, damping: 18 });
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!hasFinePointer()) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    ry.set(((e.clientX - r.left) / r.width - 0.5) * 7);
+    rx.set(-((e.clientY - r.top) / r.height - 0.5) * 5);
+  };
+  const onPointerLeave = () => {
+    rx.set(0);
+    ry.set(0);
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
@@ -58,21 +78,22 @@ export default function ChatHero() {
       setMessages((m) => [...m, { role: 'user', text }]);
       setTyping(true);
 
-      // Conversational navigation first — chip prompts always navigate;
-      // free text navigates only when not mid-qualification.
       const isChipPrompt = NAV_CHIPS.some((c) => c.prompt === text);
       const navOk =
-        isChipPrompt || chatState.stage === 'intent' || chatState.stage === 'booked' || chatState.stage === 'open';
+        isChipPrompt ||
+        chatState.stage === 'intent' ||
+        chatState.stage === 'booked' ||
+        chatState.stage === 'open';
       const nav = navOk ? detectNav(text) : undefined;
 
       if (nav) {
         await withTyping(null, 800);
-        document.getElementById(nav.sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document
+          .getElementById(nav.sectionId)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTyping(false);
         setMessages((m) => [...m, { role: 'ai', text: nav.reply }]);
-        setQuickReplies(
-          chatState.stage === 'intent' ? OPENER.quickReplies : [],
-        );
+        setQuickReplies(chatState.stage === 'intent' ? OPENER.quickReplies : []);
         busyRef.current = false;
         return;
       }
@@ -88,14 +109,15 @@ export default function ChatHero() {
     [chatState, input],
   );
 
-  // Sections can hand the conversation a prompt: window "ellie:ask" event.
+  // Sections can hand the conversation a prompt via the "ellie:ask" event.
   useEffect(() => {
     const onAsk = (e: Event) => {
       const prompt = (e as CustomEvent<string>).detail;
-      setMode('chat');
-      document.getElementById('assistant')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document
+        .getElementById('assistant')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => {
-        void send(prompt);
+        if (prompt) void send(prompt);
         inputRef.current?.focus();
       }, 450);
     };
@@ -103,142 +125,144 @@ export default function ChatHero() {
     return () => window.removeEventListener('ellie:ask', onAsk);
   }, [send]);
 
+  const startVoice = () => {
+    const opened = openVoiceAgent();
+    if (!opened) {
+      setVoiceHint(true);
+      setTimeout(() => setVoiceHint(false), 4000);
+    }
+  };
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     void send();
   };
 
   return (
-    <GlassPanel
-      elevation="floating"
-      glow
-      className="mx-auto w-full max-w-2xl"
-      id="assistant"
+    <motion.div
+      style={{ rotateX: srx, rotateY: sry, transformPerspective: 1200 }}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+      className="mx-auto w-full max-w-2xl will-change-transform"
     >
-      <div className="flex h-[540px] flex-col p-5 sm:h-[560px] sm:p-6">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
-          <div className="flex items-center gap-3">
-            <div className="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-ink">
-              {BRAND.assistant[0]}
-            </div>
-            <div>
-              <div className="font-display text-base font-semibold text-paper">
-                {BRAND.assistant} — {BRAND.assistantTagline}
+      <GlassPanel elevation="floating" glow id="assistant">
+        <div className="flex h-[540px] flex-col p-5 sm:h-[560px] sm:p-6">
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-flame to-royal text-lg font-bold text-paper shadow-[0_0_24px_-6px_rgba(232,50,63,0.8)]">
+                {BRAND.assistant[0]}
               </div>
-              <span className="flex items-center gap-1.5 text-xs text-white/50">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-paper" />
-                Online · answers instantly, 24/7
-              </span>
+              <div>
+                <div className="font-display text-base font-semibold text-paper">
+                  {BRAND.assistant} — {BRAND.assistantTagline}
+                </div>
+                <span className="flex items-center gap-1.5 text-xs text-white/50">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-flame" />
+                  Online · answers instantly, 24/7
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="flex gap-1.5 rounded-full border border-white/12 bg-white/[0.04] p-1">
-            <button
-              onClick={() => setMode('chat')}
-              aria-label="Chat with Ellie"
-              className={`grid h-8 w-8 place-items-center rounded-full transition ${
-                mode === 'chat' ? 'bg-paper text-ink' : 'text-white/50 hover:text-white'
-              }`}
-            >
-              <ChatIcon className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => setMode('voice')}
-              aria-label="Call Ellie, AI voice agent"
-              className={`grid h-8 w-8 place-items-center rounded-full transition ${
-                mode === 'voice' ? 'bg-paper text-ink' : 'text-white/50 hover:text-white'
-              }`}
-            >
-              <PhoneIcon className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-
-        {mode === 'voice' ? (
-          <div className="min-h-0 flex-1 pt-4">
-            <VoicePanel />
-          </div>
-        ) : (
-          <>
-            {/* Messages */}
-            <div ref={scrollRef} className="min-h-0 flex-1 space-y-2.5 overflow-y-auto py-4 pr-1">
-              <AnimatePresence initial={false}>
-                {messages.map((m, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-                      m.role === 'ai'
-                        ? 'border border-white/10 bg-white/[0.06] text-paper'
-                        : 'ml-auto bg-paper text-ink'
-                    }`}
-                  >
-                    {m.text}
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-              {typing && (
-                <div className="flex w-16 items-center gap-1 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3">
-                  {[0, 1, 2].map((d) => (
-                    <span
-                      key={d}
-                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-paper"
-                      style={{ animationDelay: `${d * 0.15}s` }}
-                    />
-                  ))}
+            <div className="relative">
+              <button
+                onClick={startVoice}
+                aria-label="Speak with the AI voice agent"
+                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-flame to-royal px-4 py-2.5 text-xs font-semibold text-paper shadow-[0_0_30px_-8px_rgba(232,50,63,0.9)] transition hover:brightness-110"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-paper/60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-paper" />
+                </span>
+                <PhoneIcon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Speak with AI</span>
+              </button>
+              {voiceHint && (
+                <div className="absolute right-0 top-12 z-20 w-52 rounded-xl border border-white/15 bg-ink/95 p-3 text-xs text-white/70 shadow-xl">
+                  Voice agent is still loading — try again in a moment, or use the voice bubble
+                  in the corner.
                 </div>
               )}
             </div>
+          </div>
 
-            {/* Flow quick replies */}
-            {quickReplies.length > 0 && !typing && (
-              <div className="flex flex-wrap gap-2 pb-3">
-                {quickReplies.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => void send(q)}
-                    className="rounded-full border border-white/25 bg-white/[0.06] px-3.5 py-1.5 text-xs font-medium text-paper transition hover:bg-white/[0.14]"
-                  >
-                    {q}
-                  </button>
+          {/* Messages */}
+          <div ref={scrollRef} className="min-h-0 flex-1 space-y-2.5 overflow-y-auto py-4 pr-1">
+            <AnimatePresence initial={false}>
+              {messages.map((m, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                    m.role === 'ai'
+                      ? 'border border-white/10 bg-white/[0.06] text-paper'
+                      : 'ml-auto bg-paper text-ink'
+                  }`}
+                >
+                  {m.text}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {typing && (
+              <div className="flex w-16 items-center gap-1 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3">
+                {[0, 1, 2].map((d) => (
+                  <span
+                    key={d}
+                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-flame"
+                    style={{ animationDelay: `${d * 0.15}s` }}
+                  />
                 ))}
               </div>
             )}
+          </div>
 
-            {/* Input */}
-            <form onSubmit={onSubmit} className="flex gap-2">
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask anything — or say where you want to go…"
-                className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-paper placeholder-white/35 outline-none transition focus:border-white/40"
-              />
-              <button
-                type="submit"
-                disabled={typing || !input.trim()}
-                className="rounded-xl bg-paper px-5 font-semibold text-ink transition hover:bg-white disabled:opacity-40"
-              >
-                ↑
-              </button>
-            </form>
-
-            {/* Persistent nav — the chatbot is the menu */}
-            <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1.5 border-t border-white/10 pt-3">
-              {NAV_CHIPS.map((c) => (
+          {/* Flow quick replies */}
+          {quickReplies.length > 0 && !typing && (
+            <div className="flex flex-wrap gap-2 pb-3">
+              {quickReplies.map((q) => (
                 <button
-                  key={c.label}
-                  onClick={() => void send(c.prompt)}
-                  className="text-xs text-white/45 underline-offset-4 transition hover:text-paper hover:underline"
+                  key={q}
+                  onClick={() => void send(q)}
+                  className="rounded-full border border-flame/40 bg-royal/[0.12] px-3.5 py-1.5 text-xs font-medium text-paper transition hover:border-flame/70 hover:bg-royal/[0.25]"
                 >
-                  {c.label}
+                  {q}
                 </button>
               ))}
             </div>
-          </>
-        )}
-      </div>
-    </GlassPanel>
+          )}
+
+          {/* Input */}
+          <form onSubmit={onSubmit} className="flex gap-2">
+            <input
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask anything — or say where you want to go…"
+              className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-paper placeholder-white/35 outline-none transition focus:border-flame/60"
+            />
+            <button
+              type="submit"
+              disabled={typing || !input.trim()}
+              className="rounded-xl bg-gradient-to-r from-flame to-royal px-5 font-semibold text-paper transition hover:brightness-110 disabled:opacity-40"
+            >
+              ↑
+            </button>
+          </form>
+
+          {/* Persistent nav — the chatbot is the menu */}
+          <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1.5 border-t border-white/10 pt-3">
+            {NAV_CHIPS.map((c) => (
+              <button
+                key={c.label}
+                onClick={() => void send(c.prompt)}
+                className="text-xs text-white/45 underline-offset-4 transition hover:text-flame hover:underline"
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </GlassPanel>
+    </motion.div>
   );
 }

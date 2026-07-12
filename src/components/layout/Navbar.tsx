@@ -24,7 +24,7 @@ export function Navbar() {
           </div>
           <button
             onClick={() => setOpen(true)}
-            className="rounded-full bg-paper px-4 py-2 text-xs font-semibold text-ink transition hover:bg-white"
+            className="rounded-full bg-gradient-to-r from-flame to-royal px-4 py-2 text-xs font-semibold text-paper transition hover:brightness-110"
           >
             Work with Laurie
           </button>

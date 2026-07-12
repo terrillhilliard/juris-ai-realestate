@@ -44,9 +44,9 @@ function Slider({
                    [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-white
                    [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5
                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full
-                   [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_12px_2px_rgba(255,255,255,0.6)]"
+                   [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_12px_2px_rgba(232,50,63,0.7)]"
         style={{
-          background: `linear-gradient(90deg,#FAFAFA ${pct}%,rgba(255,255,255,0.12) ${pct}%)`,
+          background: `linear-gradient(90deg,#E8323F ${pct}%,rgba(255,255,255,0.12) ${pct}%)`,
         }}
       />
     </div>

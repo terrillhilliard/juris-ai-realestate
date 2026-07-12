@@ -39,7 +39,7 @@ export default function ServicesRows() {
           transition={{ duration: 0.5, delay: i * 0.07 }}
           className="group grid gap-4 py-10 sm:grid-cols-[80px_1fr_auto] sm:items-start sm:gap-8"
         >
-          <span className="font-mono text-sm text-white/30">{s.n}</span>
+          <span className="font-mono text-sm text-flame/70">{s.n}</span>
           <div>
             <h3 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
               {s.title}
@@ -48,7 +48,7 @@ export default function ServicesRows() {
           </div>
           <button
             onClick={() => ask(s.prompt)}
-            className="justify-self-start whitespace-nowrap rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-paper transition group-hover:border-white/50 hover:bg-paper hover:text-ink sm:justify-self-end"
+            className="justify-self-start whitespace-nowrap rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-paper transition group-hover:border-flame/60 hover:bg-gradient-to-r hover:from-flame hover:to-royal hover:border-transparent sm:justify-self-end"
           >
             Ask {BRAND.assistant} →
           </button>

@@ -5,9 +5,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Monochromatic scale — one hue (none), high contrast.
+        // Monochrome base + royal red accent.
         ink: '#0A0A0A', // page background
         paper: '#FAFAFA', // primary text / solid CTAs
+        royal: '#9B111E', // royal red — accent fills, gradients
+        flame: '#E8323F', // legible red for text/glows on dark
       },
       fontFamily: {
         display: ['var(--font-display)', 'sans-serif'],

@@ -131,7 +131,7 @@ function InquiryWave() {
       {seeds.map((_, i) => (
         <mesh key={i}>
           <sphereGeometry args={[1, 8, 8]} />
-          <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
+          <meshBasicMaterial color="#E8323F" toneMapped={false} />
         </mesh>
       ))}
     </group>
@@ -150,9 +150,9 @@ function AIPresence() {
       <mesh ref={ref} position={[0, 1.7, 0]}>
         <icosahedronGeometry args={[0.75, 1]} />
         <meshStandardMaterial
-          color="#FFFFFF"
-          emissive="#FFFFFF"
-          emissiveIntensity={1.1}
+          color="#E8323F"
+          emissive="#9B111E"
+          emissiveIntensity={1.6}
           metalness={0.9}
           roughness={0.15}
           wireframe
@@ -184,7 +184,7 @@ export default function CityScene() {
       <fog attach="fog" args={['#0A0A0A', 10, 23]} />
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 8, 5]} intensity={1.4} castShadow />
-      <pointLight position={[0, 3, 0]} intensity={2.2} color="#FFFFFF" distance={8} />
+      <pointLight position={[0, 3, 0]} intensity={2.4} color="#9B111E" distance={8} />
 
       <Rig />
       <AIPresence />

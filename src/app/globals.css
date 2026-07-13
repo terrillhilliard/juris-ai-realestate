@@ -108,6 +108,32 @@ body {
   animation: liquid-morph 14s ease-in-out infinite;
 }
 
+/* Flowing highway dashes on the 3D map */
+@keyframes road-flow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+.road-flow {
+  animation: road-flow 2.4s linear infinite;
+}
+
+/* Soft pulse for map pillar bases */
+@keyframes base-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.35);
+    opacity: 0.15;
+  }
+}
+.base-pulse {
+  animation: base-pulse 2.6s ease-in-out infinite;
+}
+
 /* Ringing dial icon — periodic shake with a rest beat */
 @keyframes ring-shake {
   0%,

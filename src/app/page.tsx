@@ -9,6 +9,7 @@ import ServicesSection from '@/components/site/ServicesSection';
 import PaymentCalculator from '@/components/site/PaymentCalculator';
 import NeighborhoodsChart from '@/components/site/NeighborhoodsChart';
 import MeetLaurie from '@/components/site/MeetLaurie';
+import ContactForm from '@/components/site/ContactForm';
 import FinalCTA from '@/components/site/FinalCTA';
 import SiteFooter from '@/components/site/SiteFooter';
 import ElevenLabsWidget from '@/components/ai/ElevenLabsWidget';
@@ -28,6 +29,7 @@ export default function Home() {
       <NeighborhoodsChart />
       <MeetLaurie />
       <FinalCTA onConsult={() => setConsult(true)} />
+      <ContactForm />
       <SiteFooter />
 
       <ElevenLabsWidget />

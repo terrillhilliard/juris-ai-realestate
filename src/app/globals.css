@@ -7,187 +7,60 @@ html {
 }
 
 body {
-  background-color: #ffffff;
-  color: #181818;
+  background-color: #f6f3ec;
+  color: #161a17;
   overflow-x: hidden;
 }
 
-/* Spatial ambient depth — soft royal-red washes on white */
-.bg-ambient {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    radial-gradient(760px 500px at 50% -6%, rgba(155, 17, 30, 0.08), transparent 62%),
-    radial-gradient(580px 440px at 8% 36%, rgba(155, 17, 30, 0.06), transparent 62%),
-    radial-gradient(640px 480px at 94% 74%, rgba(0, 0, 0, 0.035), transparent 60%),
-    radial-gradient(520px 400px at 45% 106%, rgba(155, 17, 30, 0.05), transparent 60%);
-}
-
-/* Liquid-glass edge light: royal → ink hairline running around the panel */
-.edge-light {
-  position: relative;
-}
-.edge-light::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(155, 17, 30, 0.55),
-    rgba(0, 0, 0, 0.12) 32%,
-    rgba(0, 0, 0, 0.04) 58%,
-    rgba(196, 20, 42, 0.4)
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 30;
-}
-
-/* Specular sheen that drifts across glass surfaces */
-@keyframes specular-drift {
-  0%,
-  100% {
-    transform: translateX(-30%) rotate(8deg);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translateX(30%) rotate(8deg);
-    opacity: 0.85;
-  }
-}
-.specular::before {
-  animation: specular-drift 9s ease-in-out infinite;
-}
-
-/* Floating spatial orbs */
-@keyframes orb-float {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(0, -28px, 0) scale(1.06);
-  }
-}
-.orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(70px);
-  pointer-events: none;
-  animation: orb-float 11s ease-in-out infinite;
-}
-
-/* Liquid blobs — slow morphing royal tints inside glass panels */
-@keyframes liquid-morph {
-  0%,
-  100% {
-    border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
-    transform: translate(0, 0) rotate(0);
-  }
-  33% {
-    border-radius: 60% 40% 45% 55% / 45% 60% 40% 55%;
-    transform: translate(14px, -16px) rotate(9deg);
-  }
-  66% {
-    border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%;
-    transform: translate(-12px, 12px) rotate(-7deg);
-  }
-}
-.liquid-blob {
-  position: absolute;
-  pointer-events: none;
-  filter: blur(42px);
-  animation: liquid-morph 14s ease-in-out infinite;
-}
-
-/* Flowing highway dashes on the 3D map */
-@keyframes road-flow {
-  to {
-    stroke-dashoffset: -36;
-  }
-}
-.road-flow {
-  animation: road-flow 2.4s linear infinite;
-}
-
-/* Soft pulse for map pillar bases */
-@keyframes base-pulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.35);
-    opacity: 0.15;
-  }
-}
-.base-pulse {
-  animation: base-pulse 2.6s ease-in-out infinite;
-}
-
-/* Ringing dial icon — periodic shake with a rest beat */
-@keyframes ring-shake {
-  0%,
-  62%,
-  100% {
-    transform: rotate(0);
-  }
-  66%,
-  74%,
-  82% {
-    transform: rotate(-13deg);
-  }
-  70%,
-  78%,
-  86% {
-    transform: rotate(13deg);
-  }
-  90% {
-    transform: rotate(0);
-  }
-}
-.animate-ring {
-  transform-origin: 50% 62%;
-  animation: ring-shake 2s ease-in-out infinite;
-}
-
-/* Expanding call-signal rings behind the dial button */
-@keyframes call-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.55;
-  }
-  100% {
-    transform: scale(1.9);
-    opacity: 0;
-  }
-}
-.call-pulse {
-  animation: call-pulse 1.8s ease-out infinite;
+/* Warm serif display defaults */
+.font-display {
+  font-feature-settings: 'liga' 1, 'dlig' 1;
+  letter-spacing: -0.01em;
 }
 
 ::selection {
-  background: rgba(155, 17, 30, 0.22);
+  background: rgba(28, 107, 82, 0.18);
 }
 
 *::-webkit-scrollbar {
-  width: 6px;
+  width: 7px;
+  height: 7px;
 }
 *::-webkit-scrollbar-track {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  background: rgba(22, 26, 23, 0.18);
+  border-radius: 4px;
+}
+
+/* Range slider — green track, magenta thumb (matches target) */
+.range-orchid {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  outline: none;
+}
+.range-orchid::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #a94dc1;
+  border: 3px solid #f1ebe0;
+  box-shadow: 0 2px 8px rgba(169, 77, 193, 0.5);
+  cursor: pointer;
+}
+.range-orchid::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #a94dc1;
+  border: 3px solid #f1ebe0;
+  box-shadow: 0 2px 8px rgba(169, 77, 193, 0.5);
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {

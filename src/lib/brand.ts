@@ -22,6 +22,20 @@ export const BRAND = {
     author: 'Nicole S.',
     role: 'Seller',
   },
+  testimonials: [
+    {
+      quote:
+        'Laurie was fabulous to work with! She got started right away and moved so quickly to get us listed. Made the experience easy and enjoyable. Highly recommend!',
+      author: 'Nicole S.',
+      role: 'Seller',
+    },
+    {
+      quote:
+        'She knew every street and every comp. We wrote one offer, it was accepted, and Laurie kept the whole thing calm. A true East Bay neighbor.',
+      author: 'David & Axel R.',
+      role: 'Buyers',
+    },
+  ],
   assets: {
     logoWhite: '/brand/laurie-logo-white.png',
     logoColor: '/brand/laurie-logo-color.png',

@@ -8,6 +8,7 @@ const LINKS = [
   { href: '#services', label: 'Services' },
   { href: '#mortgage', label: 'Payment calculator' },
   { href: '#neighborhoods', label: 'Neighborhoods' },
+  { href: '#listings', label: 'Homes' },
   { href: '#about', label: 'About Laurie' },
   { href: '#reviews', label: 'Reviews' },
 ];

@@ -8,6 +8,7 @@ import StatsStrip from '@/components/site/StatsStrip';
 import ServicesSection from '@/components/site/ServicesSection';
 import PaymentCalculator from '@/components/site/PaymentCalculator';
 import NeighborhoodsChart from '@/components/site/NeighborhoodsChart';
+import LuxuryHomes from '@/components/site/LuxuryHomes';
 import MeetLaurie from '@/components/site/MeetLaurie';
 import ContactForm from '@/components/site/ContactForm';
 import FinalCTA from '@/components/site/FinalCTA';
@@ -27,6 +28,7 @@ export default function Home() {
       <ServicesSection />
       <PaymentCalculator />
       <NeighborhoodsChart />
+      <LuxuryHomes />
       <MeetLaurie />
       <FinalCTA onConsult={() => setConsult(true)} />
       <ContactForm />

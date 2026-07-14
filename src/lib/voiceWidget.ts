@@ -1,18 +1,10 @@
 /**
- * Bridge to the ElevenLabs ConvAI widget — the live AI voice agent.
- * The widget renders its own floating launcher; this opens it
- * programmatically so page CTAs can start a voice session directly.
+ * Starts the live ElevenLabs voice agent. All "Speak with Ellie" /
+ * "Talk to Ellie" CTAs call this; the VoiceMicButton listens for the
+ * event and mounts + starts the ConvAI widget on demand.
  */
 export function openVoiceAgent(): boolean {
-  const el = document.querySelector('elevenlabs-convai');
-  if (!el) return false;
-  // The launcher button lives in the widget's shadow root.
-  const btn = el.shadowRoot?.querySelector('button');
-  if (btn instanceof HTMLElement) {
-    btn.click();
-    return true;
-  }
-  // Fallback: some builds respond to a click on the host element.
-  (el as HTMLElement).click();
+  if (typeof window === 'undefined') return false;
+  window.dispatchEvent(new CustomEvent('ellie:voice'));
   return true;
 }

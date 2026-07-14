@@ -12,7 +12,7 @@ import MeetLaurie from '@/components/site/MeetLaurie';
 import ContactForm from '@/components/site/ContactForm';
 import FinalCTA from '@/components/site/FinalCTA';
 import SiteFooter from '@/components/site/SiteFooter';
-import ElevenLabsWidget from '@/components/ai/ElevenLabsWidget';
+import VoiceMicButton from '@/components/ai/VoiceMicButton';
 import { BookingModal } from '@/components/layout/BookingModal';
 
 export default function Home() {
@@ -32,7 +32,7 @@ export default function Home() {
       <ContactForm />
       <SiteFooter />
 
-      <ElevenLabsWidget />
+      <VoiceMicButton />
       <BookingModal open={consult} onClose={() => setConsult(false)} />
     </main>
   );
